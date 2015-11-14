@@ -6,6 +6,7 @@ angular.module('starter.controllers')
       method: 'GET',
     },
     'update': { method:'PUT' },
-    'post': { method: 'POST'}
+    'post': { method: 'POST'},
+    'login': { method: 'POST'}
   });
 });

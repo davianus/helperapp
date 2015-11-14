@@ -6,15 +6,19 @@
     </div>
   </ion-header-bar>
   <ion-content>
-    <form ng-submit="doLogin()">
+    <form name="loginForm" novalidate ng-submit="doLogin(loginData)">
       <div class="list">
+
         <label class="item item-input item-floating-label">
           <span class="input-label">Username</span>
           <input type="text" placeholder="Username" ng-model="loginData.username">
         </label>
-        <label class="item item-input item-floating-label">
+        <label class="item item-input item-floating-label" ng-class="{ 'has-error' : loginForm.loginData.password.$invalid}">
           <span class="input-label">Password</span>
           <input type="password" placeholder="Password" ng-model="loginData.password">
+          <div class="form-errors" ng-show="loginForm.loginData.password.$error && loginForm.$submitted" ng-messages="loginForm.loginData.password.$error" >
+            <div class="form-error" ng-message="wrong">Invalid password or username</div>
+          </div>
         </label>
         <button class="button button-block button-positive" type="submit">
           Log in
