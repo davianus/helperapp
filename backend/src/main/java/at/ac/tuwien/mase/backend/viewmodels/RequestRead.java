@@ -21,7 +21,7 @@ public class RequestRead {
     private String description;
     private UserRead user;
     private LocationRead location;
-
+    private List<FulfillmentRead> fulfillments;
 
     public RequestRead(Request request) {
         this.id = request.getId();
@@ -30,9 +30,16 @@ public class RequestRead {
         this.amountDone = request.getFulfillments().stream().mapToInt(Fulfillment::getAmount).sum();
         this.startDate = request.getStartDate();
         this.endDate = request.getEndDate();
-        this.description = request.getDescription();
         this.user = new UserRead(request.getUser());
-        this.location = new LocationRead(request.getLocation());
+    }
+
+    public RequestRead(Request request, boolean deep) {
+        this(request);
+        if (deep) {
+            this.description = request.getDescription();
+            this.location = new LocationRead(request.getLocation());
+            this.fulfillments = request.getFulfillments().stream().map(FulfillmentRead::new).collect(Collectors.toList());
+        }
     }
 
     public List<String> getTags() {
@@ -105,5 +112,13 @@ public class RequestRead {
 
     public void setLocation(LocationRead location) {
         this.location = location;
+    }
+
+    public List<FulfillmentRead> getFulfillments() {
+        return fulfillments;
+    }
+
+    public void setFulfillments(List<FulfillmentRead> fulfillments) {
+        this.fulfillments = fulfillments;
     }
 }
