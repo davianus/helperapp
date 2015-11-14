@@ -4,27 +4,27 @@
   </ion-header-bar>
   <ion-content>
     <p class="clearfix">Already registered? <button class="button button-small button-light button-right" ng-click="login()">Log in</button></p>
-    <form ng-submit="doRegistration()">
+    <form ng-submit="doRegistration(user)">
       <div class="list">
         <label class="item item-input item-floating-label">
           <span class="input-label">Username</span>
-          <input type="text" placeholder="Username">
+          <input type="text" placeholder="Username" ng-model="user.username">
         </label>
         <label class="item item-input item-floating-label">
           <span class="input-label">Full Name</span>
-          <input type="text" placeholder="Full Name">
+          <input type="text" placeholder="Full Name" ng-model="user.name">
         </label>
         <label class="item item-input item-floating-label">
           <span class="input-label">Phone</span>
-          <input type="tel" placeholder="Phone">
+          <input type="tel" placeholder="Phone" ng-model = "user.phone">
         </label>
         <label class="item item-input item-floating-label">
           <span class="input-label">Password</span>
-          <input type="password" placeholder="Password">
+          <input type="password" placeholder="Password" ng-model = "user.password">
         </label>
         <label class="item item-input item-floating-label">
           <span class="input-label">Confirm Password</span>
-          <input type="password" placeholder="Confirm Password">
+          <input type="password" placeholder="Confirm Password" ng-model="user.confirmPw">
         </label>
         <button class="button button-block button-positive" type="submit">
           Submit

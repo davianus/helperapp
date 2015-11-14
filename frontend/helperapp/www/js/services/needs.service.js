@@ -1,9 +1,11 @@
 angular.module('starter.controllers')
 .factory('Need', function ($resource, baseurl) {
-  return $resource(baseurl + 'request/:id', {}, {
+  return $resource(baseurl + 'requests/:id', {}, {
     'query': { method: 'GET', isArray: true},
     'get': {
-      method: 'GET'/*,
+      method: 'GET',
+
+      /*,
       transformResponse: function (data) {
         data = angular.fromJson(data);
         return data;

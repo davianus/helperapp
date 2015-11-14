@@ -7,7 +7,7 @@ angular.module('starter.controllers')
   $scope.newNeed = function() {
     $state.go('app.newNeed');
   }
-  $scope.needs = Need.query();
+  $scope.needs = Need.query({tags:'Essen'});
 })
   .controller('AllCtrl',function($scope) {
     /*$scope.needs = [
@@ -33,6 +33,10 @@ angular.module('starter.controllers')
 
     ]*/
   })
-  .controller('NewNeedCtrl', function($scope,$state) {
-
+  .controller('NewNeedCtrl', function($scope,$state,Need) {
+    $scope.need = {};
+    $scope.newNeed = function(newNeed) {
+      newNeed.location= {name: "wien", location:[0,0]};
+      Need.post(newNeed);
+    }
   });

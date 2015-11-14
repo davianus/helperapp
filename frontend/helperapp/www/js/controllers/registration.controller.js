@@ -1,6 +1,6 @@
 angular.module('starter.controllers')
 
-.controller('RegistrationCtrl',function($scope, $ionicModal, $timeout, $state) {
+.controller('RegistrationCtrl',function($scope, $ionicModal, $timeout, $state, User) {
 
   // Form data for the login modal
   $scope.loginData = {};
@@ -34,10 +34,11 @@ angular.module('starter.controllers')
       $state.go('app.needs.byme')
     }, 1000);
   };
-  $scope.doRegistration = function() {
-    //TODO: registrate
-    $timeout(function() {
-      $scope.login();
-    }, 1000);
+  $scope.user = {};
+  $scope.doRegistration = function(user) {
+    // TODO: Check password if(user.password == user.confirmPw)
+      User.post(user);
+
+
   };
 });
