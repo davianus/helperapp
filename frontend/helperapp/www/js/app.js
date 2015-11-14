@@ -25,7 +25,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
-    .state('welcome', {
+  .state('welcome', {
       url: '/welcome',
       templateUrl: 'templates/welcome.html',
       controller:'AppCtrl',
@@ -34,7 +34,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       }
     })
 
-    .state('app', {
+  .state('app', {
     url: '/app',
     abstract: true,
     templateUrl: 'templates/menu.html',
@@ -52,21 +52,50 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       }
     }
   })
-    .state('app.requests', {
-      url:'/requests',
+
+  .state('app.needs', {
+      url:'/needs',
+    abstract: true,
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/needs.html'
+      }
+    }
+    })
+    .state('app.needs.byme',{
+      url:'/byme',
       views: {
-        'menuContent': {
-          templateUrl: 'templates/requests.html',
-          controller: 'RequestCtrl'
+        'byme-tab': {
+          templateUrl: 'templates/needs/byme.html',
+          controller: 'ByMeCtrl'
         }
       }
     })
-  .state('app.requestDetail', {
-    url: '/request/:requestId',
+    .state('app.needs.forme',{
+      url:'/forme',
+      views: {
+        'forme-tab': {
+          templateUrl: 'templates/needs/forme.html',
+          controller: 'ForMeCtrl'
+        }
+      }
+    })
+    .state('app.needs.todo',{
+      url:'/todo',
+      views: {
+        'todo-tab': {
+          templateUrl: 'templates/needs/todo.html',
+          controller: 'ToDoCtrl'
+        }
+      }
+    })
+
+  .state('app.needDetail', {
+    url: '/needDetail/:needId',
     views: {
       'menuContent': {
-        templateUrl: 'templates/request.html',
-        controller: 'RequestCtrl'
+        templateUrl: 'templates/needDetail.html',
+        controller: 'NeedDetailCtrl'
       }
     }
   });
