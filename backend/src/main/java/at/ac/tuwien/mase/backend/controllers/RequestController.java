@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.*;
 
@@ -47,7 +48,7 @@ public class RequestController {
         }
         String[] tagList = tags.split(",");
         List<RequestRead> rs = new LinkedList<RequestRead>();
-        for (Request r : requestRepository.findByEndGreaterThanAndStartLessThanOrderById(start, end)) {
+        for (Request r : requestRepository.findByEndDateGreaterThanAndStartDateLessThanOrderById(start, end)) {
             RequestRead rr = new RequestRead(r);
             if (rr.getTags().containsAll(Arrays.asList(tagList)) && rr.getAmountDone() < rr.getAmount())
                 rs.add(rr);
@@ -55,6 +56,11 @@ public class RequestController {
                 break;
         }
         return rs;
+    }
+
+    @RequestMapping(method=RequestMethod.POST)
+    public RequestRead create(RequestEdit requestEdit) throws ControllerException {
+        throw new NotImplementedException();
     }
 
     @RequestMapping(value="/{id}", method=RequestMethod.GET)
@@ -102,5 +108,13 @@ public class RequestController {
         if (requestEdit.getEndDate() != null) request.setEndDate(requestEdit.getEndDate());
         requestRepository.save(request);
         return new RequestRead(request);
+    }
+
+    @RequestMapping(value="/{id}", method=RequestMethod.DELETE)
+    public void delete(@PathVariable("id") long id) throws ControllerException {
+        Request request = requestRepository.findOne(id);
+        if (request != null) {
+            requestRepository.delete(id);
+        }
     }
 }
