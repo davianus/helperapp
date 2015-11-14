@@ -1,6 +1,5 @@
 package at.ac.tuwien.mase.backend.models;
 
-import com.sun.org.apache.xerces.internal.impl.dv.xs.FullDVFactory;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -29,6 +28,38 @@ public class Request {
 
     @DBRef
     private Location location;
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
+
+    public List<Fullfillment> getFullfillments() {
+        return fullfillments;
+    }
+
+    public void setFullfillments(List<Fullfillment> fullfillments) {
+        this.fullfillments = fullfillments;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
 
     public String getId() {
         return id;

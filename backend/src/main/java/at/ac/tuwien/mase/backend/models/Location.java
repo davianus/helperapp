@@ -1,5 +1,6 @@
 package at.ac.tuwien.mase.backend.models;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.GeoSpatialIndexType;
 import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -12,12 +13,31 @@ import java.util.List;
  */
 @Document
 public class Location {
+    @Id
+    private String id;
+
     private String name;
     @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
     private double[] location;
 
     @DBRef
     private List<Request> requests;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public List<Request> getRequests() {
+        return requests;
+    }
+
+    public void setRequests(List<Request> requests) {
+        this.requests = requests;
+    }
 
     public String getName() {
         return name;
