@@ -24,34 +24,39 @@ angular.module('starter', ['ionic', 'starter.controllers'])
 
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
-
   .state('welcome', {
       url: '/welcome',
       templateUrl: 'templates/welcome.html',
-      controller:'AppCtrl',
+      controller: 'AppCtrl',
       data: {
         requireLogin: false
       }
     })
-
+    .state('registration', {
+      url: '/registration',
+      templateUrl: 'templates/registration.html',
+      controller: 'RegistrationCtrl',
+      data: {
+        requireLogin: false
+      }
+    })
   .state('app', {
-    url: '/app',
-    abstract: true,
-    templateUrl: 'templates/menu.html',
-    controller: 'AppCtrl',
+      url: '/app',
+      abstract: true,
+      templateUrl: 'templates/menu.html',
+      controller: 'AppCtrl',
       data: {
         requireLogin: true // this property will apply to all children of 'app'
       }
-  })
-
-  .state('app.search', {
-    url: '/search',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/search.html'
+    })
+    .state('app.search', {
+      url: '/search',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/search.html'
+        }
       }
-    }
-  })
+    })
 
   .state('app.needs', {
       url:'/needs',
@@ -92,13 +97,15 @@ angular.module('starter', ['ionic', 'starter.controllers'])
 
   .state('app.needDetail', {
     url: '/needDetail/:needId',
-    views: {
-      'menuContent': {
+      views: {
+        'menuContent': {
         templateUrl: 'templates/needDetail.html',
         controller: 'NeedDetailCtrl'
+        }
       }
-    }
-  });
+    });
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/welcome');
 });
+
+angular.module('starter.controllers', []);

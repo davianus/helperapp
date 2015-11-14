@@ -1,1 +1,11 @@
 /* Empty. Add your own CSS if you like */
+
+.button-right {
+  float: right;
+}
+
+.clearfix::after {
+  display: block;
+  content: "";
+  clear: right;
+}
