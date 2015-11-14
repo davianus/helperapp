@@ -24,6 +24,9 @@ public class User {
     private boolean creator;
 
     @OneToMany(mappedBy = "user")
+    private List<Subscription> subscriptions;
+
+    @OneToMany(mappedBy = "user")
     private List<Request> requests;
 
     @OneToMany(mappedBy = "user")
@@ -107,5 +110,13 @@ public class User {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public List<Subscription> getSubscriptions() {
+        return subscriptions;
+    }
+
+    public void setSubscriptions(List<Subscription> subscriptions) {
+        this.subscriptions = subscriptions;
     }
 }

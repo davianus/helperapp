@@ -18,6 +18,8 @@ public class Tag {
     private int count;
     @ManyToMany
     private List<Request> requests;
+    @ManyToMany
+    private List<Subscription> subscriptions;
 
     public String getName() {
         return name;
@@ -41,5 +43,21 @@ public class Tag {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public List<Request> getRequests() {
+        return requests;
+    }
+
+    public void setRequests(List<Request> requests) {
+        this.requests = requests;
+    }
+
+    public List<Subscription> getSubscriptions() {
+        return subscriptions;
+    }
+
+    public void setSubscriptions(List<Subscription> subscriptions) {
+        this.subscriptions = subscriptions;
     }
 }
