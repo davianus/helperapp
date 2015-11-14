@@ -22,3 +22,8 @@
 .button-right {
   float: right;
 }
+
+.registered {
+  line-height: 31px;
+  vertical-align: middle;
+}
