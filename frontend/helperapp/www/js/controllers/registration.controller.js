@@ -26,20 +26,18 @@ angular.module('starter.controllers')
   $scope.doLogin = function() {
     //console.log('Doing login', $scope.loginData);
     //TODO: check password
-    $state.go('app.requests');
+
     // Simulate a login delay. Remove this and replace with your login
     // code if using a login system
     $timeout(function() {
       $scope.closeLogin();
-      $state.go('app.requests');
+      $state.go('app.needs.byme')
     }, 1000);
   };
-
   $scope.doRegistration = function() {
     //TODO: registrate
     $timeout(function() {
       $scope.login();
     }, 1000);
   };
-
 });
