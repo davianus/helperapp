@@ -63,15 +63,25 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     abstract: true,
     views: {
       'menuContent': {
-        templateUrl: 'templates/needs.html'
+        templateUrl: 'templates/needs.html',
+        controller: 'NeedsCtrl'
       }
     }
+    })
+    .state('app.needs.all',{
+      url:'/all',
+      views: {
+        'all-tab': {
+          templateUrl: 'templates/needsList.html',
+          controller: 'AllCtrl'
+        }
+      }
     })
     .state('app.needs.byme',{
       url:'/byme',
       views: {
         'byme-tab': {
-          templateUrl: 'templates/needs/byme.html',
+          templateUrl: 'templates/needsList.html',
           controller: 'ByMeCtrl'
         }
       }
@@ -80,7 +90,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       url:'/forme',
       views: {
         'forme-tab': {
-          templateUrl: 'templates/needs/forme.html',
+          templateUrl: 'templates/needsList.html',
           controller: 'ForMeCtrl'
         }
       }
@@ -89,10 +99,20 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       url:'/todo',
       views: {
         'todo-tab': {
-          templateUrl: 'templates/needs/todo.html',
+          templateUrl: 'templates/needsList.html',
           controller: 'ToDoCtrl'
         }
       }
+    })
+    .state('app.newNeed',{
+      url:'/newNeed',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/newNeed.html',
+          controller: 'NewNeedCtrl'
+        }
+      }
+
     })
 
   .state('app.needDetail', {
