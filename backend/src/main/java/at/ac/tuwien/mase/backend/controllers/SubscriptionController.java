@@ -10,10 +10,7 @@ import at.ac.tuwien.mase.backend.repositories.interfaces.IUserRepository;
 import at.ac.tuwien.mase.backend.viewmodels.SubscriptionEdit;
 import at.ac.tuwien.mase.backend.viewmodels.SubscriptionRead;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -44,7 +41,7 @@ public class SubscriptionController {
     }
 
     @RequestMapping(method=RequestMethod.POST)
-    public SubscriptionRead create(@PathVariable("username") String username, SubscriptionEdit subscriptionCreate) throws ControllerException {
+    public SubscriptionRead create(@PathVariable("username") String username, @RequestBody SubscriptionEdit subscriptionCreate) throws ControllerException {
         User user = userRepository.findByUsername(username);
         if (user == null ) throw new ControllerException("User not found.");
         if (subscriptionCreate.getStart() == null ||
@@ -83,7 +80,7 @@ public class SubscriptionController {
     }
 
     @RequestMapping(value="/{id}", method=RequestMethod.POST)
-    public SubscriptionRead edit(@PathVariable("username") String username, @PathVariable("id") long id, SubscriptionEdit subscriptionEdit) throws ControllerException {
+    public SubscriptionRead edit(@PathVariable("username") String username, @PathVariable("id") long id, @RequestBody SubscriptionEdit subscriptionEdit) throws ControllerException {
         User user = userRepository.findByUsername(username);
         if (user == null ) throw new ControllerException("User not found.");
         Subscription subscription = subscriptionRepository.findOne(id);
