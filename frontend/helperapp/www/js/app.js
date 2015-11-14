@@ -25,11 +25,23 @@ angular.module('starter', ['ionic', 'starter.controllers'])
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
+    .state('welcome', {
+      url: '/welcome',
+      templateUrl: 'templates/welcome.html',
+      controller:'AppCtrl',
+      data: {
+        requireLogin: false
+      }
+    })
+
     .state('app', {
     url: '/app',
     abstract: true,
     templateUrl: 'templates/menu.html',
-    controller: 'AppCtrl'
+    controller: 'AppCtrl',
+      data: {
+        requireLogin: true // this property will apply to all children of 'app'
+      }
   })
 
   .state('app.search', {
@@ -40,34 +52,24 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       }
     }
   })
-
-  .state('app.browse', {
-      url: '/browse',
+    .state('app.requests', {
+      url:'/requests',
       views: {
         'menuContent': {
-          templateUrl: 'templates/browse.html'
+          templateUrl: 'templates/requests.html',
+          controller: 'RequestCtrl'
         }
       }
     })
-    .state('app.playlists', {
-      url: '/playlists',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/playlists.html',
-          controller: 'PlaylistsCtrl'
-        }
-      }
-    })
-
-  .state('app.single', {
-    url: '/playlists/:playlistId',
+  .state('app.requestDetail', {
+    url: '/request/:requestId',
     views: {
       'menuContent': {
-        templateUrl: 'templates/playlist.html',
-        controller: 'PlaylistCtrl'
+        templateUrl: 'templates/request.html',
+        controller: 'RequestCtrl'
       }
     }
   });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/playlists');
+  $urlRouterProvider.otherwise('/welcome');
 });
