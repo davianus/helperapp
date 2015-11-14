@@ -38,7 +38,7 @@ public class UserController {
     }
 
     @RequestMapping(method=RequestMethod.POST)
-    public UserRead register(UserEdit user) throws ControllerException {
+    public UserRead register(@RequestBody UserEdit user) throws ControllerException {
         if (userRepository.findByUsername(user.getUsername()) != null) {
             throw new ControllerException("Username not available.");
         }
@@ -56,7 +56,7 @@ public class UserController {
     }
 
     @RequestMapping(value="/{username}", method=RequestMethod.POST)
-    public UserRead edit(@PathVariable("username") String username, UserEdit user) throws ControllerException {
+    public UserRead edit(@PathVariable("username") String username, @RequestBody UserEdit user) throws ControllerException {
         User u = userRepository.findByUsername(username);
         if (u == null) {
             throw new ControllerException("Username not found.");
