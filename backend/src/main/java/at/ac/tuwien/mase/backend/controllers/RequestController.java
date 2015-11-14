@@ -96,7 +96,7 @@ public class RequestController {
         request.setStartDate(requestCreate.getStartDate());
         request.setEndDate(requestCreate.getEndDate());
         requestRepository.save(request);
-        return new RequestRead(request);
+        return new RequestRead(request, true);
     }
 
     @RequestMapping(value="/{id}", method=RequestMethod.GET)
@@ -105,7 +105,7 @@ public class RequestController {
         if (request == null) {
             throw new ControllerException("Request not found.");
         }
-        return new RequestRead(request);
+        return new RequestRead(request, true);
     }
 
     @RequestMapping(value="/{id}", method=RequestMethod.POST)
@@ -143,7 +143,7 @@ public class RequestController {
         if (requestEdit.getStartDate() != null) request.setStartDate(requestEdit.getStartDate());
         if (requestEdit.getEndDate() != null) request.setEndDate(requestEdit.getEndDate());
         requestRepository.save(request);
-        return new RequestRead(request);
+        return new RequestRead(request, true);
     }
 
     @RequestMapping(value="/{id}", method=RequestMethod.DELETE)
