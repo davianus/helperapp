@@ -1,11 +1,24 @@
 /* Empty. Add your own CSS if you like */
 
-.button-right {
-  float: right;
+.centered-welcome-button {
+  position: absolute;
+  left: 50%;
+  bottom: 50px;
 }
 
-.clearfix::after {
-  display: block;
-  content: "";
-  clear: right;
+.button-welcome {
+  right: 50%;
+  width: 150px;
+  height: 150px;
+
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.button-circle {
+  border-radius: 100%;
+}
+
+.button-right {
+  float: right;
 }
