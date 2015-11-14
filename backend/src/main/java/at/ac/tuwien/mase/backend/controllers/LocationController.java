@@ -5,9 +5,9 @@ import at.ac.tuwien.mase.backend.repositories.interfaces.ILocationRepository;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -27,7 +27,7 @@ public class LocationController {
     public LocationController(ILocationRepository repo) {this.repository = repo;}
 
     @RequestMapping(method= RequestMethod.GET)
-    public List<String> getSimilarLocations(@PathVariable("q") String query) {
+    public List<String> getSimilarLocations(@RequestParam("q") String query) {
 
         logger.debug("Getting similar tags for tag "+query);
 
