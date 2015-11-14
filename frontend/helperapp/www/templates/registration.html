@@ -1,0 +1,32 @@
+<ion-view view-title="Registration">
+  <ion-content>
+    <p class="clearfix">Already registered? <button class="button button-light button-right" ng-click="login()">Log in</button></p>
+    <form ng-submit="doRegistration()">
+      <div class="list list-inset">
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Username</span>
+          <input type="text" placeholder="Username">
+        </label>
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Full Name</span>
+          <input type="text" placeholder="Full Name">
+        </label>
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Phone</span>
+          <input type="tel" placeholder="Phone">
+        </label>
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Password</span>
+          <input type="password" placeholder="Password">
+        </label>
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Confirm Password</span>
+          <input type="password" placeholder="Confirm Password">
+        </label>
+        <button class="button button-block button-positive" type="submit">
+          Submit
+        </button>
+      </div>
+    </form>
+  </ion-content>
+</ion-view>

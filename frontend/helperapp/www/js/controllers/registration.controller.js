@@ -1,13 +1,6 @@
-angular.module('starter.controllers', [])
+angular.module('starter.controllers')
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, $state) {
-
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
+.controller('RegistrationCtrl',function($scope, $ionicModal, $timeout, $state) {
 
   // Form data for the login modal
   $scope.loginData = {};
@@ -33,22 +26,20 @@ angular.module('starter.controllers', [])
   $scope.doLogin = function() {
     //console.log('Doing login', $scope.loginData);
     //TODO: check password
-    $state.go('app.requests')
+    $state.go('app.requests');
     // Simulate a login delay. Remove this and replace with your login
     // code if using a login system
     $timeout(function() {
       $scope.closeLogin();
+      $state.go('app.requests');
     }, 1000);
   };
-})
 
-.controller('RequestCtrl',function($scope) {
-  $scope.requests = [
-    {id: 1, title: "100 Sessel"},
-    {id: 2, title: "Babynahrung"}
-  ]
-})
+  $scope.doRegistration = function() {
+    //TODO: registrate
+    $timeout(function() {
+      $scope.login();
+    }, 1000);
+  };
 
-
-.controller('RequestDetailCtrl', function($scope, $stateParams) {
 });
