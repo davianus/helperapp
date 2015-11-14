@@ -1,7 +1,6 @@
 package at.ac.tuwien.mase.backend.models;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -25,7 +24,7 @@ public class User {
     private List<Request> requests;
 
     @DBRef
-    private List<Fullfillment> fullfillments;
+    private List<Fulfillment> fulfillments;
 
     public List<Request> getRequests() {
         return requests;
@@ -35,12 +34,12 @@ public class User {
         this.requests = requests;
     }
 
-    public List<Fullfillment> getFullfillments() {
-        return fullfillments;
+    public List<Fulfillment> getFulfillments() {
+        return fulfillments;
     }
 
-    public void setFullfillments(List<Fullfillment> fullfillments) {
-        this.fullfillments = fullfillments;
+    public void setFulfillments(List<Fulfillment> fulfillments) {
+        this.fulfillments = fulfillments;
     }
 
     public String getName() {

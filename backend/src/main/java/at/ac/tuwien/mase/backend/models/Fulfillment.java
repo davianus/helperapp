@@ -10,7 +10,7 @@ import java.util.Date;
  * Created by xvinci on 11/14/15.
  */
 @Document
-public class Fullfillment {
+public class Fulfillment {
     @Id
     private String id;
 

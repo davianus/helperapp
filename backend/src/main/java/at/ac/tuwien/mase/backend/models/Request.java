@@ -14,8 +14,8 @@ import java.util.List;
 public class Request {
     @Id
     private String id;
-    private Date startdate;
-    private Date enddate;
+    private Date startDate;
+    private Date endDate;
     private String description;
     private int amount;
 
@@ -23,7 +23,7 @@ public class Request {
     private List<Tag> tags;
 
     @DBRef
-    private List<Fullfillment> fullfillments;
+    private List<Fulfillment> fulfillments;
 
     @DBRef
     private User user;
@@ -39,12 +39,12 @@ public class Request {
         this.tags = tags;
     }
 
-    public List<Fullfillment> getFullfillments() {
-        return fullfillments;
+    public List<Fulfillment> getFulfillments() {
+        return fulfillments;
     }
 
-    public void setFullfillments(List<Fullfillment> fullfillments) {
-        this.fullfillments = fullfillments;
+    public void setFulfillments(List<Fulfillment> fulfillments) {
+        this.fulfillments = fulfillments;
     }
 
     public User getUser() {
@@ -71,20 +71,20 @@ public class Request {
         this.id = id;
     }
 
-    public Date getStartdate() {
-        return startdate;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public void setStartdate(Date startdate) {
-        this.startdate = startdate;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
-    public Date getEnddate() {
-        return enddate;
+    public Date getEndDate() {
+        return endDate;
     }
 
-    public void setEnddate(Date enddate) {
-        this.enddate = enddate;
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
     public String getDescription() {
