@@ -8,6 +8,7 @@ import at.ac.tuwien.mase.backend.models.User;
 public class UserRead {
 
     public UserRead(User user) {
+        this.id = user.getId();
         this.username = user.getUsername();
         this.name = user.getName();
         this.phone = user.getPhone();
@@ -16,6 +17,7 @@ public class UserRead {
         this.creator = user.isCreator();
     }
 
+    private long id;
     private String username;
     private String name;
     private String phone;
@@ -69,5 +71,13 @@ public class UserRead {
 
     public void setCreator(boolean creator) {
         this.creator = creator;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }

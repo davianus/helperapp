@@ -1,10 +1,7 @@
 package at.ac.tuwien.mase.backend.models;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -16,6 +13,7 @@ public class Tag {
     @GeneratedValue
     private long id;
 
+    @Column(unique = true)
     private String name;
     private int count;
     @ManyToMany
@@ -35,5 +33,13 @@ public class Tag {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }

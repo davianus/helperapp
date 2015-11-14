@@ -21,7 +21,7 @@ public class UserController {
 
     @RequestMapping(value="/{username}", method=RequestMethod.GET)
     public UserRead read(@PathVariable("username") String username) throws ControllerException {
-        User user = userRepository.findOne(username);
+        User user = userRepository.findByUsername(username);
         if (user == null ) {
             throw new ControllerException("User not found.");
         }
@@ -30,7 +30,7 @@ public class UserController {
 
     @RequestMapping(value="/token", method=RequestMethod.POST)
     public String login(@RequestParam String username,@RequestParam String password) throws ControllerException {
-        User user = userRepository.findOne(username);
+        User user = userRepository.findByUsername(username);
         if (user == null || !BCrypt.checkpw(password, user.getPassword())) {
             throw new ControllerException("User/Password incorrect.");
         }
@@ -39,7 +39,7 @@ public class UserController {
 
     @RequestMapping(method=RequestMethod.POST)
     public UserRead register(UserEdit user) throws ControllerException {
-        if (userRepository.exists(user.getUsername())) {
+        if (userRepository.findByUsername(user.getUsername()) != null) {
             throw new ControllerException("Username not available.");
         }
         if (user.getPassword() == null || user.getName() == null || user.getPhone() == null) {
@@ -52,12 +52,12 @@ public class UserController {
         u.setPhone(user.getPhone());
         u.setLogo(user.getPhone());
         userRepository.save(u);
-        return new UserRead(userRepository.findOne(user.getUsername()));
+        return new UserRead(userRepository.findByUsername(user.getUsername()));
     }
 
     @RequestMapping(value="/{username}", method=RequestMethod.POST)
     public UserRead edit(@PathVariable("username") String username, UserEdit user) throws ControllerException {
-        User u = userRepository.findOne(username);
+        User u = userRepository.findByUsername(username);
         if (u == null) {
             throw new ControllerException("Username not found.");
         }

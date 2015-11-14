@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 /**
  * Created by xvinci on 11/14/15.
  */
-public interface ITagRepository extends JpaRepository<Tag, String> {
+public interface ITagRepository extends JpaRepository<Tag, Long> {
     @Query("SELECT t FROM Tag t WHERE t.name LIKE :name")
-    public Tag findByName(@Param("name") String name);
+    Tag findByName(@Param("name") String name);
 }

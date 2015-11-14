@@ -1,9 +1,6 @@
 package at.ac.tuwien.mase.backend.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -14,8 +11,9 @@ public class User {
 
     @Id
     @GeneratedValue
-    private int id;
+    private long id;
 
+    @Column(unique = true)
     private String username;
 
     private String name;
@@ -101,5 +99,13 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }

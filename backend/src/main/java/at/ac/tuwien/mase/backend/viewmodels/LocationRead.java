@@ -6,7 +6,7 @@ import at.ac.tuwien.mase.backend.models.Location;
  * Created by lobmaier on 14.11.2015.
  */
 public class LocationRead {
-    private String id;
+    private long id;
     private String name;
     private double[] location;
 
@@ -16,11 +16,11 @@ public class LocationRead {
         this.location = location.getLocation();
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 

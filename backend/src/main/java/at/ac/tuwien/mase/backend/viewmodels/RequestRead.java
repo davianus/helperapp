@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
  * Created by lobmaier on 14.11.2015.
  */
 public class RequestRead {
-    private String id;
+    private long id;
     private List<String> tags;
     private int amount;
     private int amountDone;
@@ -51,11 +51,11 @@ public class RequestRead {
         this.amount = amount;
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 

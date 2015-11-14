@@ -4,6 +4,7 @@ import at.ac.tuwien.mase.backend.controllers.exceptions.ControllerException;
 import at.ac.tuwien.mase.backend.models.Location;
 import at.ac.tuwien.mase.backend.models.Request;
 import at.ac.tuwien.mase.backend.models.Tag;
+import at.ac.tuwien.mase.backend.repositories.interfaces.ILocationRepository;
 import at.ac.tuwien.mase.backend.repositories.interfaces.IRequestRepository;
 import at.ac.tuwien.mase.backend.repositories.interfaces.ITagRepository;
 import at.ac.tuwien.mase.backend.viewmodels.RequestEdit;
@@ -57,7 +58,7 @@ public class RequestController {
     }
 
     @RequestMapping(value="/{id}", method=RequestMethod.GET)
-    public RequestRead read(@PathVariable("id") String id) throws ControllerException {
+    public RequestRead read(@PathVariable("id") long id) throws ControllerException {
         Request request = requestRepository.findOne(id);
         if (request == null) {
             throw new ControllerException("Request not found.");
@@ -66,7 +67,7 @@ public class RequestController {
     }
 
     @RequestMapping(value="/{id}", method=RequestMethod.POST)
-    public RequestRead edit(@PathVariable("id") String id, RequestEdit requestEdit) throws ControllerException {
+    public RequestRead edit(@PathVariable("id") long id, RequestEdit requestEdit) throws ControllerException {
         Request request = requestRepository.findOne(id);
         if (request == null) {
             throw new ControllerException("Request not found.");
@@ -74,12 +75,12 @@ public class RequestController {
         if (requestEdit.getTags() != null && !requestEdit.getTags().isEmpty()) {
             List<Tag> ts = new LinkedList<>();
             for (String tag :requestEdit.getTags()) {
-                Tag t = tagRepository.findOne(tag);
+                Tag t = tagRepository.findByName(tag);
                 if (t == null) {
                     t = new Tag();
                     t.setName(tag);
                     t.setCount(1);
-                    tagRepository.insert(t);
+                    tagRepository.save(t);
                 }
                 ts.add(t);
             }
@@ -91,7 +92,7 @@ public class RequestController {
                 l = new Location();
                 l.setName(requestEdit.getLocation().getName());
                 l.setLocation(requestEdit.getLocation().getLocation());
-                locationRepository.insert(l);
+                locationRepository.save(l);
             }
             request.setLocation(l);
         }

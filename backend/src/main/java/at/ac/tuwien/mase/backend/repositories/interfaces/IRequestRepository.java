@@ -9,6 +9,6 @@ import java.util.List;
 /**
  * Created by xvinci on 11/14/15.
  */
-public interface IRequestRepository extends JpaRepository<Request, String> {
+public interface IRequestRepository extends JpaRepository<Request, Long> {
 	List<Request> findByEndGreaterThanAndStartLessThanOrderById(Date start, Date end);
 }

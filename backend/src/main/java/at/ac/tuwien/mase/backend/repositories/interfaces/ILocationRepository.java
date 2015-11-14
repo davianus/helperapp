@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by capta on 14.11.2015.
  */
-public interface ILocationRepository extends JpaRepository<Location, String> {
+public interface ILocationRepository extends JpaRepository<Location, Long> {
     @Query("SELECT l FROM Location l WHERE l.name LIKE %:name%")
     public List<Location> autocompleteLocation(@Param("name") String name);
 }
