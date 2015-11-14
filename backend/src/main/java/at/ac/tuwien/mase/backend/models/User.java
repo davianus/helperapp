@@ -13,9 +13,7 @@ import java.util.List;
 @Document
 public class User {
     @Id
-    private String id;
-
-    @Indexed(unique = true)
+    private String username;
     private String name;
     private String logo;
     private boolean verified;
@@ -28,14 +26,6 @@ public class User {
 
     @DBRef
     private List<Fullfillment> fullfillments;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public List<Request> getRequests() {
         return requests;
@@ -99,5 +89,13 @@ public class User {
 
     public void setCreator(boolean creator) {
         this.creator = creator;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by xvinci on 11/14/15.
  */
 @RestController
-@RequestMapping("/streaming")
+@RequestMapping("/resquests")
 public class RequestController {
     private static final Logger logger = LogManager.getLogger(RequestController.class);
 
