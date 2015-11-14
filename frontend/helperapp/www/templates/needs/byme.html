@@ -1,7 +1,6 @@
 <ion-view view-title="Needs by me">
 
   <ion-content>
-
     <ion-list>
       <ion-item ng-repeat="need in needs" href="#/app/needDetail/{{need.id}}">
         <span ng-repeat="tag in need.tags">#{{tag.name}} </span>
