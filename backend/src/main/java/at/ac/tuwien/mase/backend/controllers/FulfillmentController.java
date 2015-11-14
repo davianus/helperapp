@@ -8,10 +8,7 @@ import at.ac.tuwien.mase.backend.repositories.interfaces.IUserRepository;
 import at.ac.tuwien.mase.backend.viewmodels.FulfillmentEdit;
 import at.ac.tuwien.mase.backend.viewmodels.FulfillmentRead;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,7 +35,7 @@ public class FulfillmentController {
     }
 
     @RequestMapping(method=RequestMethod.POST)
-    public FulfillmentRead create(@PathVariable("username") String username, FulfillmentEdit fulfillmentEdit) throws ControllerException {
+    public FulfillmentRead create(@PathVariable("username") String username, @RequestBody FulfillmentEdit fulfillmentEdit) throws ControllerException {
         User user = userRepository.findByUsername(username);
         if (user == null ) throw new ControllerException("User not found.");
         if (fulfillmentEdit.getAmount() == null ||
@@ -64,7 +61,7 @@ public class FulfillmentController {
     }
 
     @RequestMapping(value="/{id}", method=RequestMethod.POST)
-    public FulfillmentRead edit(@PathVariable("username") String username, @PathVariable("id") long id, FulfillmentEdit fulfillmentEdit) throws ControllerException {
+    public FulfillmentRead edit(@PathVariable("username") String username, @PathVariable("id") long id, @RequestBody FulfillmentEdit fulfillmentEdit) throws ControllerException {
         User user = userRepository.findByUsername(username);
         if (user == null ) throw new ControllerException("User not found.");
         Fulfillment fulfillment = fulfillmentRepository.findOne(id);

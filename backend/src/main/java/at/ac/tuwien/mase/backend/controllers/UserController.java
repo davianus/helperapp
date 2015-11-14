@@ -29,12 +29,12 @@ public class UserController {
     }
 
     @RequestMapping(value="/token", method=RequestMethod.POST)
-    public String login(@RequestParam String username,@RequestParam String password) throws ControllerException {
-        User user = userRepository.findByUsername(username);
-        if (user == null || !BCrypt.checkpw(password, user.getPassword())) {
+    public String login(@RequestBody UserEdit user) throws ControllerException {
+        User u = userRepository.findByUsername(user.getUsername());
+        if (u == null || !BCrypt.checkpw(user.getPassword(), u.getPassword())) {
             throw new ControllerException("User/Password incorrect.");
         }
-        return user.getUsername();
+        return u.getUsername();
     }
 
     @RequestMapping(method=RequestMethod.POST)
