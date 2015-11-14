@@ -14,7 +14,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.*;
 
@@ -22,7 +21,7 @@ import java.util.*;
  * Created by xvinci on 11/14/15.
  */
 @RestController
-@RequestMapping("/resquests")
+@RequestMapping("/requests")
 public class RequestController {
     private static final Logger logger = LogManager.getLogger(RequestController.class);
 
@@ -48,7 +47,7 @@ public class RequestController {
         }
         String[] tagList = tags.split(",");
         List<RequestRead> rs = new LinkedList<RequestRead>();
-        for (Request r : requestRepository.findByEndDateGreaterThanAndStartDateLessThanOrderById(start, end)) {
+        for (Request r : requestRepository.findByDate(start, end)) {
             RequestRead rr = new RequestRead(r);
             if (rr.getTags().containsAll(Arrays.asList(tagList)) && rr.getAmountDone() < rr.getAmount())
                 rs.add(rr);
@@ -59,8 +58,45 @@ public class RequestController {
     }
 
     @RequestMapping(method=RequestMethod.POST)
-    public RequestRead create(RequestEdit requestEdit) throws ControllerException {
-        throw new NotImplementedException();
+    public RequestRead create(RequestEdit requestCreate) throws ControllerException {
+        if (requestCreate.getTags() == null || requestCreate.getTags().isEmpty() ||
+                requestCreate.getLocation() == null ||
+                requestCreate.getAmount() == null ||
+                requestCreate.getDescription() == null ||
+                requestCreate.getStartDate() == null ||
+                requestCreate.getEndDate() == null) {
+            throw new ControllerException("Not all required attributes given.");
+        }
+        Request request = new Request();
+        List<Tag> ts = new LinkedList<>();
+        for (String tag :requestCreate.getTags()) {
+            Tag t = tagRepository.findByName(tag);
+            if (t == null) {
+                t = new Tag();
+                t.setName(tag);
+                t.setCount(1);
+                tagRepository.save(t);
+            } else {
+                t.setCount(t.getCount() + 1);
+                tagRepository.save(t);
+            }
+            ts.add(t);
+        }
+        request.setTags(ts);
+        Location l = locationRepository.findOne(requestCreate.getLocation().getId());
+        if (l == null) {
+            l = new Location();
+            l.setName(requestCreate.getLocation().getName());
+            l.setLocation(requestCreate.getLocation().getLocation());
+            locationRepository.save(l);
+        }
+        request.setLocation(l);
+        request.setAmount(requestCreate.getAmount());
+        request.setDescription(requestCreate.getDescription());
+        request.setStartDate(requestCreate.getStartDate());
+        request.setEndDate(requestCreate.getEndDate());
+        requestRepository.save(request);
+        return new RequestRead(request);
     }
 
     @RequestMapping(value="/{id}", method=RequestMethod.GET)
