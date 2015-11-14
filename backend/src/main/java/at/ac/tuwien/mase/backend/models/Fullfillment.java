@@ -1,34 +1,35 @@
 package at.ac.tuwien.mase.backend.models;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
-
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import java.util.Date;
 
 /**
  * Created by xvinci on 11/14/15.
  */
-@Document
+@Entity
 public class Fullfillment {
     @Id
-    private String id;
+    @GeneratedValue
+    private long id;
 
     private Date until;
     private int amount;
     private boolean done;
 
-    @DBRef
+    @ManyToOne(targetEntity = Request.class)
     private Request request;
 
-    @DBRef
+    @ManyToOne(targetEntity = User.class)
     private User user;
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 

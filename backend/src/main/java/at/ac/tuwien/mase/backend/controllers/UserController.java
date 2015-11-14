@@ -51,7 +51,7 @@ public class UserController {
         u.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
         u.setPhone(user.getPhone());
         u.setLogo(user.getPhone());
-        userRepository.insert(u);
+        userRepository.save(u);
         return new UserRead(userRepository.findOne(user.getUsername()));
     }
 

@@ -1,34 +1,32 @@
 package at.ac.tuwien.mase.backend.models;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.GeoSpatialIndexType;
-import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
-
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.List;
 
 /**
  * Created by xvinci on 11/14/15.
  */
-@Document
+@Entity
 public class Location {
     @Id
-    private String id;
+    @GeneratedValue
+    private long id;
 
     private String name;
 
-    @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
     private double[] location;
 
-    @DBRef
+    @OneToMany(mappedBy = "location")
     private List<Request> requests;
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 

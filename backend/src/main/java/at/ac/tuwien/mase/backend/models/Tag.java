@@ -1,16 +1,25 @@
 package at.ac.tuwien.mase.backend.models;
 
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import java.util.List;
 
 /**
  * Created by xvinci on 11/14/15.
  */
-@Document
+@Entity
 public class Tag {
-    @Indexed(unique = true)
+    @Id
+    @GeneratedValue
+    private long id;
+
     private String name;
     private int count;
+    @ManyToMany
+    private List<Request> requests;
 
     public String getName() {
         return name;

@@ -1,19 +1,23 @@
 package at.ac.tuwien.mase.backend.models;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
-
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.List;
 
 /**
  * Created by xvinci on 11/14/15.
  */
-@Document
+@Entity
 public class User {
+
     @Id
+    @GeneratedValue
+    private int id;
+
     private String username;
+
     private String name;
     private String logo;
     private boolean verified;
@@ -21,10 +25,10 @@ public class User {
     private String password;
     private boolean creator;
 
-    @DBRef
+    @OneToMany(mappedBy = "user")
     private List<Request> requests;
 
-    @DBRef
+    @OneToMany(mappedBy = "user")
     private List<Fullfillment> fullfillments;
 
     public List<Request> getRequests() {
