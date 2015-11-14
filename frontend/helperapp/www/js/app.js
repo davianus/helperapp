@@ -57,7 +57,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
       }
     }
   })
-
   .state('app.needs', {
     url:'/needs',
     abstract: true,
@@ -67,60 +66,40 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
         controller: 'NeedsCtrl'
       }
     }
-    })
-    .state('app.needs.all',{
-      url:'/all',
-      views: {
-        'all-tab': {
-          templateUrl: 'templates/needsList.html',
-          controller: 'AllCtrl'
-        }
-      }
-    })
-    .state('app.needs.byme',{
-      url:'/byme',
-      views: {
-        'byme-tab': {
-          templateUrl: 'templates/needsList.html',
-          controller: 'ByMeCtrl'
-        }
-      }
-    })
-    .state('app.needs.forme',{
-      url:'/forme',
-      views: {
-        'forme-tab': {
-          templateUrl: 'templates/needsList.html',
-          controller: 'ForMeCtrl'
-        }
-      }
-    })
-    .state('app.needs.todo',{
-      url:'/todo',
-      views: {
-        'todo-tab': {
-          templateUrl: 'templates/needsList.html',
-          controller: 'ToDoCtrl'
-        }
-      }
-    })
-    .state('app.newNeed',{
-      url:'/newNeed',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/newNeed.html',
-          controller: 'NewNeedCtrl'
-        }
-      }
-
-    })
-
-  .state('app.needDetail', {
-    url: '/needDetail/:needId',
+  })
+  .state('app.needs.all',{
+    url:'/all',
     views: {
-      'menuContent': {
-        templateUrl: 'templates/needDetail.html',
-        controller: 'NeedDetailCtrl'
+      'all-tab': {
+        templateUrl: 'templates/needs-list.html',
+        controller: 'AllCtrl'
+      }
+    }
+  })
+  .state('app.needs.byme',{
+    url:'/byme',
+    views: {
+      'byme-tab': {
+        templateUrl: 'templates/needs-list.html',
+        controller: 'ByMeCtrl'
+      }
+    }
+  })
+  .state('app.needs.forme',{
+    url:'/forme',
+    views: {
+      'forme-tab': {
+        templateUrl: 'templates/needs-list.html',
+        controller: 'ForMeCtrl'
+      }
+    }
+  })
+  .state('app.needs.todo',{
+    url:'/todo',
+    views: {
+      'todo-tab': {
+        templateUrl: 'templates/needs-list.html',
+        controller: 'ToDoCtrl'
       }
     }
   })
