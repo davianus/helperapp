@@ -18,7 +18,9 @@ public class Request {
     private Date enddate;
     private String description;
     private int amount;
-    private List<String> tags;
+
+    @DBRef
+    private List<Tag> tags;
 
     @DBRef
     private List<Fullfillment> fullfillments;
@@ -29,11 +31,11 @@ public class Request {
     @DBRef
     private Location location;
 
-    public List<String> getTags() {
+    public List<Tag> getTags() {
         return tags;
     }
 
-    public void setTags(List<String> tags) {
+    public void setTags(List<Tag> tags) {
         this.tags = tags;
     }
 

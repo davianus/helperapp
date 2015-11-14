@@ -17,6 +17,7 @@ public class Location {
     private String id;
 
     private String name;
+
     @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
     private double[] location;
 
