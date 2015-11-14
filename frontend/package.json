@@ -1,0 +1,29 @@
+{
+  "name": "helperapp",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "ios-sim": "^5.0.3",
+    "cordova": "^5.4.0",
+    "ionic": "^1.7.8"
+  },
+  "devDependencies": {
+    "cordova": "^5.4.0",
+    "ionic": "^1.7.8",
+    "ios-sim": "^5.0.3"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daviian/helperapp.git"
+  },
+  "author": "",
+  "license": "GPLv3",
+  "bugs": {
+    "url": "https://github.com/daviian/helperapp/issues"
+  },
+  "homepage": "https://github.com/daviian/helperapp#readme"
+}
