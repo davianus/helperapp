@@ -6,16 +6,13 @@
     <p class="clearfix padding registered">Already registered? <button class="button button-small button-light button-right" ng-click="login()">Log in</button></p>
     <form ng-submit="doRegistration()">
       <div class="list">
-        <label class="item item-input item-floating-label">
-          <span class="input-label">Username</span>
+        <label class="item item-input">
           <input type="text" placeholder="Username">
         </label>
-        <label class="item item-input item-floating-label">
-          <span class="input-label">Full Name</span>
+        <label class="item item-input">
           <input type="text" placeholder="Full Name">
         </label>
-        <label class="item item-input item-floating-label">
-          <span class="input-label">Phone</span>
+        <label class="item item-input">
           <input type="tel" placeholder="Phone">
         </label>
         <label class="item item-input item-stacked-label">
@@ -23,12 +20,10 @@
           <img ng-src="{{photo}}"></img>
           <button class="button button-small" ng-click="upload();$event.stopPropagation();$event.preventDefault()">Upload Photo</button>
         </label>
-        <label class="item item-input item-floating-label">
-          <span class="input-label">Password</span>
+        <label class="item item-input">
           <input type="password" placeholder="Password">
         </label>
-        <label class="item item-input item-floating-label">
-          <span class="input-label">Confirm Password</span>
+        <label class="item item-input">
           <input type="password" placeholder="Confirm Password">
         </label>
         <button class="button button-block button-positive" type="submit">

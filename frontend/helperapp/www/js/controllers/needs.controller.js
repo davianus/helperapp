@@ -51,28 +51,25 @@ angular.module('starter.controllers')
 })
   .controller('AllCtrl',function($scope) {
     $scope.needs = [
-      {id: 1, owner: "Caritas", tags:[{name:'Sessel'},{name:'Stühle'}], amount: '200 Stk.'},
-      {id: 2, owner: "Diakonie", tags:[{name:'Essen'},{name:'Babynahrung'}], amount: '50 Stk.'},
-      {id: 3, owner: "Rotes Kreuz", tags:[{name:'Schuhe'}], amount: '20 Stk.'}
+      {id: 1, owner: "Caritas", tags:['Sessel', 'Stühle'], amount: '200 Stk.'},
+      {id: 2, owner: "Diakonie", tags:['Essen', 'Babynahrung'], amount: '50 Stk.'},
+      {id: 3, owner: "Rotes Kreuz", tags:['Schuhe'], amount: '20 Stk.'}
     ]
   }).controller('ByMeCtrl',function($scope) {
     $scope.needs = [
-      {id: 1, owner: "By Me", tags:[{name:'Sessel'},{name:'Stühle'}], amount: '200 Stk.'},
-      {id: 2, owner: "By Me", tags:[{name:'Essen'},{name:'Babynahrung'}], amount: '50 Stk.'}
+      {id: 1, owner: "By Me", tags:['Sessel', 'Stühle'], amount: '200 Stk.'},
+      {id: 2, owner: "By Me", tags:['Essen', 'Babynahrung'], amount: '50 Stk.'}
     ]
   })
   .controller('ForMeCtrl',function($scope) {
     $scope.needs = [
-      {id: 1, owner: "Caritas", tags:[{name:'Sessel'},{name:'Stühle'}], amount: '200 Stk.'},
-      {id: 2, owner: "Diakonie", tags:[{name:'Essen'},{name:'Babynahrung'}], amount: '50 Stk.'}
+      {id: 1, owner: "Caritas", tags:['Sessel', 'Stühle'], amount: '200 Stk.'},
+      {id: 2, owner: "Diakonie", tags:['Essen', 'Babynahrung'], amount: '50 Stk.'}
     ]
   })
   .controller('ToDoCtrl',function($scope) {
     $scope.needs = [
-      {id: 1, owner: "Caritas", tags:[{name:'Sessel'},{name:'Stühle'}], amount: '200 Stk.'}
+      {id: 1, owner: "Caritas", tags:['Sessel', 'Stühle'], amount: '200 Stk.'}
 
     ]
-  })
-  .controller('NewNeedCtrl', function($scope,$state) {
-
   });
