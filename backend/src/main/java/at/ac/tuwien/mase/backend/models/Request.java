@@ -1,36 +1,36 @@
 package at.ac.tuwien.mase.backend.models;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
 /**
  * Created by xvinci on 11/14/15.
  */
-@Document
+@Entity
 public class Request {
     @Id
-    private String id;
+    @GeneratedValue
+    private long id;
     private Date startDate;
     private Date endDate;
     private String description;
     private int amount;
 
-    @DBRef
+    @ManyToMany
     private List<Tag> tags;
 
-    @DBRef
+    @OneToMany(mappedBy = "request")
     private List<Fulfillment> fulfillments;
 
-    @DBRef
+    @ManyToOne(targetEntity = User.class)
     private User user;
 
-    @DBRef
+    @ManyToOne(targetEntity = Location.class)
     private Location location;
 
+    @ManyToMany
     public List<Tag> getTags() {
         return tags;
     }
@@ -63,11 +63,11 @@ public class Request {
         this.location = location;
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 
