@@ -63,37 +63,58 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
     abstract: true,
     views: {
       'menuContent': {
-        templateUrl: 'templates/needs.html'
+        templateUrl: 'templates/needs.html',
+        controller: 'NeedsCtrl'
       }
     }
-  })
-  .state('app.needs.byme',{
-    url:'/byme',
-    views: {
-      'byme-tab': {
-        templateUrl: 'templates/needs/byme.html',
-        controller: 'ByMeCtrl'
+    })
+    .state('app.needs.all',{
+      url:'/all',
+      views: {
+        'all-tab': {
+          templateUrl: 'templates/needsList.html',
+          controller: 'AllCtrl'
+        }
       }
-    }
-  })
-  .state('app.needs.forme',{
-    url:'/forme',
-    views: {
-      'forme-tab': {
-        templateUrl: 'templates/needs/forme.html',
-        controller: 'ForMeCtrl'
+    })
+    .state('app.needs.byme',{
+      url:'/byme',
+      views: {
+        'byme-tab': {
+          templateUrl: 'templates/needsList.html',
+          controller: 'ByMeCtrl'
+        }
       }
-    }
-  })
-  .state('app.needs.todo',{
-    url:'/todo',
-    views: {
-      'todo-tab': {
-        templateUrl: 'templates/needs/todo.html',
-        controller: 'ToDoCtrl'
+    })
+    .state('app.needs.forme',{
+      url:'/forme',
+      views: {
+        'forme-tab': {
+          templateUrl: 'templates/needsList.html',
+          controller: 'ForMeCtrl'
+        }
       }
-    }
-  })
+    })
+    .state('app.needs.todo',{
+      url:'/todo',
+      views: {
+        'todo-tab': {
+          templateUrl: 'templates/needsList.html',
+          controller: 'ToDoCtrl'
+        }
+      }
+    })
+    .state('app.newNeed',{
+      url:'/newNeed',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/newNeed.html',
+          controller: 'NewNeedCtrl'
+        }
+      }
+
+    })
+
   .state('app.needDetail', {
     url: '/needDetail/:needId',
     views: {
