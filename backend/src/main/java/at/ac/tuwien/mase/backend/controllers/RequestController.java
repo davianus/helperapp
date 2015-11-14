@@ -1,12 +1,8 @@
 package at.ac.tuwien.mase.backend.controllers;
 
 import at.ac.tuwien.mase.backend.controllers.exceptions.ControllerException;
-import at.ac.tuwien.mase.backend.models.Location;
-import at.ac.tuwien.mase.backend.models.Request;
-import at.ac.tuwien.mase.backend.models.Tag;
-import at.ac.tuwien.mase.backend.repositories.interfaces.ILocationRepository;
-import at.ac.tuwien.mase.backend.repositories.interfaces.IRequestRepository;
-import at.ac.tuwien.mase.backend.repositories.interfaces.ITagRepository;
+import at.ac.tuwien.mase.backend.models.*;
+import at.ac.tuwien.mase.backend.repositories.interfaces.*;
 import at.ac.tuwien.mase.backend.viewmodels.RequestEdit;
 import at.ac.tuwien.mase.backend.viewmodels.RequestRead;
 import org.apache.log4j.LogManager;
@@ -16,6 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by xvinci on 11/14/15.
@@ -34,10 +31,22 @@ public class RequestController {
     @Autowired
     private ILocationRepository locationRepository;
 
+    @Autowired
+    private IUserRepository userRepository;
+
+    @Autowired
+    private ISubscriptionRepository subscriptionRepository;
+
     @RequestMapping(method=RequestMethod.GET)
-    public List<RequestRead> search(@RequestParam String tags,
-                       @RequestParam(value="start", required=false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date start,
-                       @RequestParam(value="end", required=false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date end) {
+    public List<RequestRead> search(
+            @RequestParam(required=false) String filter,
+            @RequestParam(required=false) String user,
+            @RequestParam(required=false) String tags,
+            @RequestParam(value="start", required=false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date start,
+            @RequestParam(value="end", required=false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date end) throws ControllerException {
+        User u = userRepository.findByUsername(user);
+        if (filter == null) filter = "all";
+        if (u == null && !filter.equals("all")) throw new ControllerException("User must be given if filter is not all.");
         if (start == null) start = new Date();
         if (end == null) {
             Calendar c = new GregorianCalendar();
@@ -49,16 +58,22 @@ public class RequestController {
         List<RequestRead> rs = new LinkedList<RequestRead>();
         for (Request r : requestRepository.findByDate(start, end)) {
             RequestRead rr = new RequestRead(r);
-            if (rr.getTags().containsAll(Arrays.asList(tagList)) && rr.getAmountDone() < rr.getAmount())
-                rs.add(rr);
-            if (rs.size() == 10)
-                break;
+            if (rr.getAmountDone() >= rr.getAmount()) continue;
+            if (tags != null && tags != "" && !rr.getTags().containsAll(Arrays.asList(tags.split(",")))) continue;
+            if (filter.equals("user") && rr.getUser().getId() != u.getId()) continue;
+            if (filter.equals("subscriptions") && !subscriptionRepository.findByUser(u)
+                    .stream().anyMatch((Subscription s) -> rr.getTags().containsAll(
+                            s.getTags().stream().map(Tag::getName).collect(Collectors.toList()))
+                    ))
+                continue;
+            rs.add(rr);
+            if (rs.size() == 10) break;
         }
         return rs;
     }
 
     @RequestMapping(method=RequestMethod.POST)
-    public RequestRead create(RequestEdit requestCreate) throws ControllerException {
+    public RequestRead create(@RequestBody RequestEdit requestCreate) throws ControllerException {
         if (requestCreate.getTags() == null || requestCreate.getTags().isEmpty() ||
                 requestCreate.getLocation() == null ||
                 requestCreate.getAmount() == null ||
@@ -109,7 +124,7 @@ public class RequestController {
     }
 
     @RequestMapping(value="/{id}", method=RequestMethod.POST)
-    public RequestRead edit(@PathVariable("id") long id, RequestEdit requestEdit) throws ControllerException {
+    public RequestRead edit(@PathVariable("id") long id, @RequestBody RequestEdit requestEdit) throws ControllerException {
         Request request = requestRepository.findOne(id);
         if (request == null) {
             throw new ControllerException("Request not found.");
