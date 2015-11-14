@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,6 +33,17 @@ public class LocationController {
         logger.debug("Getting similar tags for tag "+query);
 
         List<Location> qresult = repository.autocompleteLocation(query);
+
+        if(qresult.size() == 0) {
+            logger.debug("No locations found");
+            return new ArrayList<String>();
+        } else if(qresult.size() < 5)
+        {
+            logger.debug("Less than 5 locations found");
+            qresult = qresult.subList(0, qresult.size());
+        }
+        else
+            qresult = qresult.subList(0, 4);
 
        List<String> result = qresult.stream().map(Location::getName).collect(Collectors.toList());
 
