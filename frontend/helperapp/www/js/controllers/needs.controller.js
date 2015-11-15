@@ -50,23 +50,23 @@ angular.module('starter.controllers')
 
     need.user = {username:window.localStorage['user']};
     need.location = {name:'Wien',location:[0,0]};
-    Need.post(need,function(resp) {
-      closeDetail();
-      $state.go('app.needs.byme');
+    Need.post(need, function() {
+      $scope.closeCreate();
     });
+    // Simulate a login delay. Remove this and replace with your login
+    // code if using a login system
 
   };
 
-  // Triggered in the login modal to close it
   $scope.closeDetail = function() {
     $scope.detailModal.hide();
-  };
-
+  }
 
   $scope.show = function(need) {
     Need.get({id:need.id},function(need){
       $scope.detailNeed = need;
       $scope.detailNeed.location = "Wien";
+      $scope.notMyNeed = window.localStorage.user !== $scope.detailNeed.user.username;
       $scope.detailModal.show();
     });//angular.copy(need);
 
@@ -88,7 +88,7 @@ angular.module('starter.controllers')
     $scope.need.startDate = new Date(Date.parse($scope.need.startDate));
     $scope.need.endDate = new Date(Date.parse($scope.need.endDate));
     $scope.newNeed(need);
-  }
+  };
 
   $scope.deleteNeed = function(need) {
     var need = angular.copy(need);
@@ -96,7 +96,17 @@ angular.module('starter.controllers')
     Need.delete(need, function() {
       $scope.reload();
     });
-  }
+  };
+
+  $scope.doneFulfillment = function(fulfillment) {
+    var tmp = {};
+    tmp.user = window.localStorage.user;
+    tmp.id = fulfillment.id;
+    tmp.done = true;
+    Fulfillment.save(tmp, function() {
+      $scope.detailNeed = Need.get({id: $scope.detailNeed.id, user: window.localStorage.user});
+    });
+  };
 
 })
   .controller('AllCtrl',function($scope,Need) {
