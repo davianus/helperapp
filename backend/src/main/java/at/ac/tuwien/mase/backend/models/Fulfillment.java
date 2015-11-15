@@ -19,7 +19,7 @@ public class Fulfillment {
     private int amount;
     private boolean done;
 
-    @ManyToOne(targetEntity = Request.class)
+    @ManyToOne
     private Request request;
 
     @ManyToOne(targetEntity = User.class)

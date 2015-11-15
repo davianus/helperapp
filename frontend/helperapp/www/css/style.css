@@ -117,3 +117,16 @@ label.item.valid-lr {
   padding: 2px 0 2px 16px;
   color: red;
 }
+
+.entryTitle {
+	font-weight: bold;
+}
+
+.detailTitle {
+	font-weight: bold;
+	font-size:1.8em;
+}
+
+.generalPadding {
+	  padding: 2px 0 2px 16px;
+}

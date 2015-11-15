@@ -28,9 +28,7 @@ angular.module('starter.controllers')
   $scope.doSubscribe = function() {
     $scope.subscription.user = window.localStorage.user;
     $scope.subscription.start = $filter('date')($scope.subscription.startDate, 'yyyy-MM-dd');
-    delete $scope.subscription.startDate;
     $scope.subscription.end = $filter('date')($scope.subscription.endDate, 'yyyy-MM-dd');
-    delete $scope.subscription.endDate;
     Subscription.save($scope.subscription, function() {
       $scope.subscription = new Subscription();
       $scope.subscriptions = Subscription.query({
@@ -42,8 +40,8 @@ angular.module('starter.controllers')
 
   $scope.editSubscription = function(subscription) {
     $scope.subscription = angular.copy(subscription);
-    $scope.startDate = $scope.subscription.start;
-    $scope.endDate = $scope.subscription.end;
+    $scope.subscription.startDate = new Date(Date.parse($scope.subscription.start));
+    $scope.subscription.endDate = new Date(Date.parse($scope.subscription.end));
     $scope.subscribe();
   }
 

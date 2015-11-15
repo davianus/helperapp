@@ -2,7 +2,7 @@
  * Created by MiiKE on 14.11.2015.
  */
 angular.module('starter.controllers')
-.controller('NeedsCtrl',function($scope, $state, Need, $ionicModal, Tag) {
+.controller('NeedsCtrl',function($scope, $state, Need, $ionicModal, Tag, Fulfillment) {
 
   $scope.callbackMethod = function (query) {
 
@@ -70,10 +70,16 @@ angular.module('starter.controllers')
 
   };
 
-  $scope.newNeed = function(need) {
-    $state.go('app.newNeed');
-  }
-  //$scope.needs = Need.query();
+  $scope.fulfillment = new Fulfillment();
+  $scope.doFulfillment = function() {
+    $scope.fulfillment.user = window.localStorage.user;
+    $scope.fulfillment.requestId = $scope.detailNeed.id;
+    $scope.fulfillment.until = $filter('date')($scope.fulfillment.untilDate, 'yyyy-MM-dd');
+    $scope.fulfillment = new Fulfillment();
+    Fulfillment.save($scope.fulfillment, function() {
+      $state.go('app.needs.todo');
+    });
+  };
 
   $scope.editNeed = function(need) {
     $scope.need = angular.copy(need);
@@ -107,11 +113,10 @@ angular.module('starter.controllers')
       $scope.needs = Need.query({'filter': 'subscriptions', 'user': window.localStorage['user']});
     }
     $scope.reload();
-
   })
-  .controller('ToDoCtrl',function($scope,Need) {
+  .controller('ToDoCtrl',function($scope, Fulfillment) {
     $scope.reload = function() {
-      $scope.needs = {};
+    $scope.needs = Fulfillment.query({user: window.localStorage.user});
     }
     $scope.reload();
   });

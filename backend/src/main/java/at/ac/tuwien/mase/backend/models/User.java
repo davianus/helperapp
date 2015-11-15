@@ -1,6 +1,7 @@
 package at.ac.tuwien.mase.backend.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,13 +25,13 @@ public class User {
     private boolean creator;
 
     @OneToMany(mappedBy = "user")
-    private List<Subscription> subscriptions;
+    private List<Subscription> subscriptions = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    private List<Request> requests;
+    private List<Request> requests = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    private List<Fulfillment> fulfillments;
+    private List<Fulfillment> fulfillments = new ArrayList<>();
 
     public List<Request> getRequests() {
         return requests;

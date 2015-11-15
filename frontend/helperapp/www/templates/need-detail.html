@@ -6,16 +6,28 @@
     <h1 class="title">Need Detail</h1>
   </ion-header-bar>
   <ion-content>
-    <p class="tags">
-      <span ng-repeat="tag in detailNeed.tags">#{{tag}} </span>
+    <p class="tags detailTitle generalPadding">
+      <span ng-repeat="tag in detailNeed.tags">{{tag}} </span>
     </p>
-    <p class="date">{{detailNeed.startDate | date:'short'}} - {{detailNeed.endDate | date:'short'}}</p>
-    <p class="description">{{detailNeed.description}}</p>
-    <p class="amount">{{detailNeed.remaining}}</p>
-    <h2>Contact</h2>
-    <p>{{detailNeed.user.name}}</p>
-    <p>{{detailNeed.user.phone}}</p>
-    <p>{{detailNeed.location}}</p>
-    <button class="button button-block button-positive">Fulfill</button>
+    <p class="date generalPadding">{{detailNeed.startDate | date:'short'}} - {{detailNeed.endDate | date:'short'}}</p>
+    <p class="description generalPadding">{{detailNeed.description}}</p>
+    <p class="amount generalPadding">{{detailNeed.remaining}}</p>
+    <h3 class="generalPadding">Contact</h3>
+    <p class="generalPadding">{{detailNeed.user.name}}</p>
+    <p class="generalPadding">{{detailNeed.user.phone}}</p>
+    <p class="generalPadding">{{detailNeed.location}}</p>
+    <form class="fulfill-form" ng-submit="doFulfillment()">
+      <div class="list">
+        <label class="item item-input">
+          <span class="input-label">Until Date</span>
+          <input type="date" placeholder="yyyy-MM-dd" ng-model="fulfillment.untilDate">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Amount</span>
+          <input type="number" placeholder="Amount" ng-model="fulfillment.amount">
+        </label>
+      </div>
+      <button class="button button-block button-positive" type="submit">Fulfill</button>
+    </form>
   </ion-content>
 </ion-modal-view>
