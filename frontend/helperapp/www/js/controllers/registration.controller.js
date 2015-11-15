@@ -6,7 +6,6 @@ angular.module('starter.controllers')
   $scope.loginData = {};
   $scope.loginForm = {loginData:{password:{}}};
   $scope.error = false;
-  $scope.errorMessage = 'Error';
 
 
   // Create the login modal that we will use later
@@ -38,8 +37,9 @@ angular.module('starter.controllers')
     //console.log('Doing login', $scope.loginData);
       Login.post(loginData,function(resp) {
         //Success
+        window.localStorage['user'] = loginData.username;
         $scope.closeLogin();
-        $state.go('app.needs.byme')
+        $state.go('app.needs.byme');
       }, function(resp) {
         //error
         $scope.error = true;
@@ -99,5 +99,7 @@ angular.module('starter.controllers')
   $scope.doRegistration = function(user) {
     // TODO: Check password if(user.password == user.confirmPw)
     User.post(user);
+    window.localStorage['user'] = user.username;
+    $state.go('app.needs.byme');
   };
 });
