@@ -13,7 +13,7 @@
     </ion-nav-buttons>
   </ion-nav-bar>
   <ion-content>
-    <ion-list show-delete="shouldShowDelete">
+    <ion-list>
       <ion-item ng-repeat="subscription in subscriptions">
         <span ng-repeat="tag in subscription.tags">#{{tag}} </span>
         <!-- <ion-option-button class="button-positive" ng-click="editSubscription(subscription)">Edit</ion-option-button> -->
