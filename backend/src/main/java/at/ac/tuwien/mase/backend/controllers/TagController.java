@@ -32,7 +32,7 @@ public class TagController {
     public List<String>  getSimilarTags(@RequestParam("q") String query) {
         logger.debug("Getting similar tags for tag "+query);
 
-        List<Tag> qresult = repository.findAll(new Sort(Sort.Direction.DESC, "count"));
+        List<Tag> qresult = repository.autocompleteTag(query);
 
         if(qresult.size() == 0) {
             logger.debug("No tags found");
