@@ -76,13 +76,17 @@ angular.module('starter.controllers')
   };
 })
   .controller('AllCtrl',function($scope,Need) {
+    $scope.showCreate = false;
     $scope.needs = Need.query({'filter':'all'});
   }).controller('ByMeCtrl',function($scope,Need) {
+    $scope.showCreate = true;
     $scope.needs = Need.query({'filter':'user','user':window.localStorage['user']});
   })
   .controller('ForMeCtrl',function($scope,Need) {
+    $scope.showCreate = false;
     $scope.needs = Need.query({'filter':'subscriptions','user':window.localStorage['user']});
   })
   .controller('ToDoCtrl',function($scope, Fulfillment) {
+    $scope.showCreate = false;
     $scope.needs = Fulfillment.query({user: window.localStorage.user});
   });
