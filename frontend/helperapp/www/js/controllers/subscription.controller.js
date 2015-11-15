@@ -5,7 +5,7 @@ angular.module('starter.controllers')
   $scope.subscription = new Subscription();
 
   $scope.subscriptions = Subscription.query({
-    user: 'test'
+    user: window.localStorage.user
   });
 
   $ionicModal.fromTemplateUrl('templates/new-subscription.html', {
@@ -26,20 +26,38 @@ angular.module('starter.controllers')
 
   // Perform the login action when the user submits the login form
   $scope.doSubscribe = function() {
-    $scope.subscription.user = 'test';
+    $scope.subscription.user = window.localStorage.user;
     $scope.subscription.start = $filter('date')($scope.subscription.startDate, 'yyyy-MM-dd');
     delete $scope.subscription.startDate;
     $scope.subscription.end = $filter('date')($scope.subscription.endDate, 'yyyy-MM-dd');
     delete $scope.subscription.endDate;
     Subscription.save($scope.subscription, function() {
+      $scope.subscription = new Subscription();
       $scope.subscriptions = Subscription.query({
-        user: 'test'
+        user: window.localStorage.user
       });
+      $scope.closeSubscribe();
     });
   };
 
-  $scope.callbackMethod = function (query) {
+  $scope.editSubscription = function(subscription) {
+    $scope.subscription = angular.copy(subscription);
+    $scope.startDate = $scope.subscription.start;
+    $scope.endDate = $scope.subscription.end;
+    $scope.subscribe();
+  }
 
+  $scope.deleteSubscription = function(subscription) {
+    var subscription = angular.copy(subscription);
+    subscription.user = window.localStorage.user;
+    Subscription.delete(subscription, function() {
+      $scope.subscriptions = Subscription.query({
+        user: window.localStorage.user
+      });
+    });
+  }
+
+  $scope.callbackMethod = function (query) {
     var tags = Tag.query({
       q: query
     }).$promise.then(function(result) {
@@ -47,7 +65,6 @@ angular.module('starter.controllers')
       if (tags.length === 0) {
         tags.push(query);
       }
-
       return tags;
     });
 
