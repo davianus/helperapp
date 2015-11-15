@@ -49,14 +49,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngResource', 'ngMess
       requireLogin: true // this property will apply to all children of 'app'
     }
   })
-  .state('app.search', {
-    url: '/search',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/search.html'
-      }
-    }
-  })
   .state('app.needs', {
     url:'/needs',
     abstract: true,
