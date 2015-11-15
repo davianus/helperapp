@@ -51,8 +51,8 @@ angular.module('starter.controllers')
     need.user = {username:window.localStorage['user']};
     need.location = {name:'Wien',location:[0,0]};
     Need.post(need,function(resp) {
-      closeDetail();
-      $state.go('app.needs.byme');
+      $scope.closeCreate();
+      $state.go('app.needs.byme',{},{reload:true});
     });
 
   };
@@ -103,6 +103,7 @@ angular.module('starter.controllers')
     $scope.showCreate = false;
     $scope.reload = function() {
       $scope.needs = Need.query({'filter': 'all'});
+      $scope.fulfillment=[];
     }
     $scope.$on('$ionicView.beforeEnter', function() {
       $scope.reload();
@@ -111,6 +112,7 @@ angular.module('starter.controllers')
     $scope.showCreate = true;
   $scope.reload = function() {
     $scope.needs = Need.query({'filter': 'user', 'user': window.localStorage['user']});
+    $scope.fulfillment=[];
   }
     $scope.$on('$ionicView.beforeEnter', function() {
       $scope.reload();
@@ -120,6 +122,7 @@ angular.module('starter.controllers')
     $scope.showCreate = false;
     $scope.reload = function() {
       $scope.needs = Need.query({'filter': 'subscriptions', 'user': window.localStorage['user']});
+      $scope.fulfillment=[];
     }
     $scope.$on('$ionicView.beforeEnter', function() {
       $scope.reload();
@@ -128,7 +131,10 @@ angular.module('starter.controllers')
   .controller('ToDoCtrl',function($scope, Fulfillment) {
     $scope.showCreate = false;
     $scope.reload = function() {
-      $scope.needs = Fulfillment.query({user: window.localStorage.user});
+      Fulfillment.query({user: window.localStorage.user}, function(fulfillment) {
+        $scope.needs = [];
+        $scope.fulfillment = fulfillment;
+      });
     }
     $scope.$on('$ionicView.beforeEnter', function() {
       $scope.reload();
