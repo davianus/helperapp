@@ -2,8 +2,10 @@ package at.ac.tuwien.mase.backend.controllers;
 
 import at.ac.tuwien.mase.backend.controllers.exceptions.ControllerException;
 import at.ac.tuwien.mase.backend.models.Fulfillment;
+import at.ac.tuwien.mase.backend.models.Request;
 import at.ac.tuwien.mase.backend.models.User;
 import at.ac.tuwien.mase.backend.repositories.interfaces.IFulfillmentRepository;
+import at.ac.tuwien.mase.backend.repositories.interfaces.IRequestRepository;
 import at.ac.tuwien.mase.backend.repositories.interfaces.IUserRepository;
 import at.ac.tuwien.mase.backend.viewmodels.FulfillmentEdit;
 import at.ac.tuwien.mase.backend.viewmodels.FulfillmentRead;
@@ -26,6 +28,9 @@ public class FulfillmentController {
     @Autowired
     private IFulfillmentRepository fulfillmentRepository;
 
+    @Autowired
+    private IRequestRepository requestRepository;
+
     @RequestMapping(method= RequestMethod.GET)
     public List<FulfillmentRead> readAll(@PathVariable("username") String username) throws ControllerException {
         User user = userRepository.findByUsername(username);
@@ -44,10 +49,13 @@ public class FulfillmentController {
                 fulfillmentEdit.getUntil() == null) {
             throw new ControllerException("Not all required attributes given.");
         }
+        Request request = requestRepository.findOne(fulfillmentEdit.getRequestId());
+        if (request == null) throw new ControllerException("Request not found.");
         Fulfillment fulfillment = new Fulfillment();
         fulfillment.setAmount(fulfillmentEdit.getAmount());
         fulfillment.setUntil(fulfillmentEdit.getUntil());
         fulfillment.setUser(user);
+        fulfillment.setRequest(request);
         fulfillmentRepository.save(fulfillment);
         return new FulfillmentRead(fulfillment, true);
     }
