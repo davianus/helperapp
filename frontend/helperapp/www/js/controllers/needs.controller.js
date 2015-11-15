@@ -2,7 +2,7 @@
  * Created by MiiKE on 14.11.2015.
  */
 angular.module('starter.controllers')
-.controller('NeedsCtrl',function($scope, $state, Need, $ionicModal, Tag, Fulfillment) {
+.controller('NeedsCtrl',function($scope, $state, Need, $ionicModal, Tag, Fulfillment, $filter) {
 
   $scope.callbackMethod = function (query) {
 
@@ -75,9 +75,9 @@ angular.module('starter.controllers')
     $scope.fulfillment.user = window.localStorage.user;
     $scope.fulfillment.requestId = $scope.detailNeed.id;
     $scope.fulfillment.until = $filter('date')($scope.fulfillment.untilDate, 'yyyy-MM-dd');
-    $scope.fulfillment = new Fulfillment();
     Fulfillment.save($scope.fulfillment, function() {
       $state.go('app.needs.todo');
+      $scope.fulfillment = new Fulfillment();
     });
   };
 
@@ -98,23 +98,27 @@ angular.module('starter.controllers')
 
 })
   .controller('AllCtrl',function($scope,Need) {
+    $scope.showCreate = false;
     $scope.reload = function() {
       $scope.needs = Need.query({'filter': 'all'});
     }
     $scope.reload();
   }).controller('ByMeCtrl',function($scope,Need) {
+    $scope.showCreate = true;
   $scope.reload = function() {
     $scope.needs = Need.query({'filter': 'user', 'user': window.localStorage['user']});
   }
     $scope.reload();
   })
   .controller('ForMeCtrl',function($scope,Need) {
+    $scope.showCreate = false;
     $scope.reload = function() {
       $scope.needs = Need.query({'filter': 'subscriptions', 'user': window.localStorage['user']});
     }
     $scope.reload();
   })
   .controller('ToDoCtrl',function($scope, Fulfillment) {
+    $scope.showCreate = false;
     $scope.reload = function() {
     $scope.needs = Fulfillment.query({user: window.localStorage.user});
     }

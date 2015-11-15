@@ -12,11 +12,11 @@
     <div class="list">
       <label class="item item-input">
         <span class="input-label">Start Date</span>
-        <input type="date" placeholder="Start Date" ng-model="need.startDate">
+        <input type="date" placeholder="yyyy-MM-dd" ng-model="need.startDate">
       </label>
       <label class="item item-input">
         <span class="input-label">End Date</span>
-        <input type="date" placeholder="End Date" ng-model="need.endDate">
+        <input type="date" placeholder="yyyy-MM-dd" ng-model="need.endDate">
       </label>
       <label class="item item-input item-stacked-label">
         <span class="input-label">Description</span>
@@ -24,15 +24,13 @@
       </label>
       <label class="item item-input">
         <span class="input-label">Amount</span>
-        <input type="number" placeholder="Amount" ng-model="need.amount">
+        <input type="number" min="1" placeholder="Amount" ng-model="need.amount">
       </label>
 
       <label class="item item-input">
         <span class="input-label">Tags</span>
         <input ion-autocomplete type="text" readonly="readonly" class="ion-autocomplete" autocomplete="off" ng-model="need.tags" items-method="callbackMethod(query)"/>
       </label>
-
-
     </div>
   </ion-content>
 </ion-modal-view>
