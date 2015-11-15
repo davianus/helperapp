@@ -17,7 +17,7 @@
     <p class="generalPadding">{{detailNeed.user.name}}</p>
     <p class="generalPadding">{{detailNeed.user.phone}}</p>
     <p class="generalPadding">{{detailNeed.location.name}}</p>
-    <form class="fulfill-form" ng-submit="doFulfillment()" ng-show="notMyNeed && notFulfilled">
+    <form class="fulfill-form" ng-submit="doFulfillment()" ng-show="notMyNeed">
       <div class="list">
         <label class="item item-input">
           <span class="input-label">Until Date</span>

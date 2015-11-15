@@ -65,7 +65,6 @@ angular.module('starter.controllers')
   $scope.show = function(need) {
     Need.get({id:need.id},function(need){
       $scope.detailNeed = need;
-      $scope.notFulfilled = $scope.detailNeed.amount > ($scope.detailNeed.amount - $scope.detailNeed.amountDone);
       $scope.notMyNeed = window.localStorage.user !== $scope.detailNeed.user.username;
       $scope.detailModal.show();
     });//angular.copy(need);
