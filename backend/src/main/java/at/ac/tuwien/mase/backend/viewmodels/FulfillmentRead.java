@@ -19,7 +19,7 @@ public class FulfillmentRead {
         this.until = fulfillment.getUntil();
         this.amount = fulfillment.getAmount();
         this.done = fulfillment.isDone();
-        this.request = new RequestRead(fulfillment.getRequest());
+        if (fulfillment.getRequest() != null) this.request = new RequestRead(fulfillment.getRequest());
     }
 
     public long getId() {
