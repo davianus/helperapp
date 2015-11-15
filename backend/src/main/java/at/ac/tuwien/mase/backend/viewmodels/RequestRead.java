@@ -28,6 +28,7 @@ public class RequestRead {
         this.tags = request.getTags().stream().map(Tag::getName).collect(Collectors.toList());
         this.amount = request.getAmount();
         if (request.getFulfillments() != null) this.amountDone = request.getFulfillments().stream().mapToInt(Fulfillment::getAmount).sum();
+        else this.amountDone = 0;
         this.startDate = request.getStartDate();
         this.endDate = request.getEndDate();
         this.user = new UserRead(request.getUser());
@@ -38,7 +39,7 @@ public class RequestRead {
         if (deep) {
             this.description = request.getDescription();
             this.location = new LocationRead(request.getLocation());
-            this.fulfillments = request.getFulfillments().stream().map(FulfillmentRead::new).collect(Collectors.toList());
+            if (request.getFulfillments() != null) this.fulfillments = request.getFulfillments().stream().map(FulfillmentRead::new).collect(Collectors.toList());
         }
     }
 
