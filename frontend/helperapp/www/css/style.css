@@ -1,5 +1,69 @@
 /* Empty. Add your own CSS if you like */
 
+.background-images {
+  width: 300%;
+  height: 100%;
+
+  -webkit-animation: slide 20s infinite alternate; /* Safari 4+ */
+  -moz-animation:    slide 20s infinite alternate; /* Fx 5+ */
+  -o-animation:      slide 20s infinite alternate; /* Opera 12+ */
+  animation:         slide 20s infinite alternate;
+}
+
+.background-images > div {
+  float: left;
+  width: 33.3333%;
+  height: 100%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+}
+
+.background-images .bg-1 {
+  background-image: url(../img/bg1.jpg);
+}
+
+.background-images .bg-2 {
+  background-image: url(../img/bg2.jpg);
+}
+
+.background-images .bg-3 {
+  background-image: url(../img/bg3.jpg);
+}
+
+@-webkit-keyframes slide {
+  0%   { -webkit-transform: translate3d(0%,0,0); transform: translate3d(0%,0,0); }
+  20% { -webkit-transform: translate3d(0%,0,0); transform: translate3d(0%,0,0); }
+  30% { -webkit-transform: translate3d(-33.3333%,0,0); transform: translate3d(-33.3333%,0,0); }
+  70% { -webkit-transform: translate3d(-33.3333%,0,0); transform: translate3d(-33.3333%,0,0); }
+  80% { -webkit-transform: translate3d(-66.6666%,0,0); transform: translate3d(-66.6666%,0,0); }
+  100% { -webkit-transform: translate3d(-66.6666%,0,0); transform: translate3d(-66.6666%,0,0); }
+}
+@-moz-keyframes slide {
+  0%   { -webkit-transform: translate3d(0%,0,0); transform: translate3d(0%,0,0); }
+  20% { -webkit-transform: translate3d(0%,0,0); transform: translate3d(0%,0,0); }
+  30% { -webkit-transform: translate3d(-33.3333%,0,0); transform: translate3d(-33.3333%,0,0); }
+  70% { -webkit-transform: translate3d(-33.3333%,0,0); transform: translate3d(-33.3333%,0,0); }
+  80% { -webkit-transform: translate3d(-66.6666%,0,0); transform: translate3d(-66.6666%,0,0); }
+  100% { -webkit-transform: translate3d(-66.6666%,0,0); transform: translate3d(-66.6666%,0,0); }
+}
+@-o-keyframes slide {
+  0%   { -webkit-transform: translate3d(0%,0,0); transform: translate3d(0%,0,0); }
+  20% { -webkit-transform: translate3d(0%,0,0); transform: translate3d(0%,0,0); }
+  30% { -webkit-transform: translate3d(-33.3333%,0,0); transform: translate3d(-33.3333%,0,0); }
+  70% { -webkit-transform: translate3d(-33.3333%,0,0); transform: translate3d(-33.3333%,0,0); }
+  80% { -webkit-transform: translate3d(-66.6666%,0,0); transform: translate3d(-66.6666%,0,0); }
+  100% { -webkit-transform: translate3d(-66.6666%,0,0); transform: translate3d(-66.6666%,0,0); }
+}
+@keyframes slide {
+  0%   { -webkit-transform: translate3d(0%,0,0); transform: translate3d(0%,0,0); }
+  20% { -webkit-transform: translate3d(0%,0,0); transform: translate3d(0%,0,0); }
+  30% { -webkit-transform: translate3d(-33.3333%,0,0); transform: translate3d(-33.3333%,0,0); }
+  70% { -webkit-transform: translate3d(-33.3333%,0,0); transform: translate3d(-33.3333%,0,0); }
+  80% { -webkit-transform: translate3d(-66.6666%,0,0); transform: translate3d(-66.6666%,0,0); }
+  100% { -webkit-transform: translate3d(-66.6666%,0,0); transform: translate3d(-66.6666%,0,0); }
+}
+
 .centered-welcome-button {
   position: absolute;
   left: 50%;
