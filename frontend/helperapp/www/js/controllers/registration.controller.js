@@ -37,7 +37,7 @@ angular.module('starter.controllers')
       }, function(resp) {
         //error
         $scope.error = true;
-        $scope.errorMessage = resp.data.message;
+        $scope.errorMessage = "Login failed";//resp.data.message;
       });
 
 
