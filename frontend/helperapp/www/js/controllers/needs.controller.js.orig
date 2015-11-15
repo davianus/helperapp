@@ -50,9 +50,14 @@ angular.module('starter.controllers')
 
     need.user = {username:window.localStorage['user']};
     need.location = {name:'Wien',location:[0,0]};
-    Need.post(need, function() {
+<<<<<<< HEAD
+    Need.post(need,function(resp) {
       $scope.closeCreate();
       $state.go('app.needs.byme',{},{reload:true});
+=======
+    Need.post(need, function() {
+      $scope.closeCreate();
+>>>>>>> e07310a1a6eadceaa27b1274e7e6c4103b869457
     });
     // Simulate a login delay. Remove this and replace with your login
     // code if using a login system
@@ -66,6 +71,7 @@ angular.module('starter.controllers')
   $scope.show = function(need) {
     Need.get({id:need.id},function(need){
       $scope.detailNeed = need;
+      $scope.detailNeed.location = "Wien";
       $scope.notMyNeed = window.localStorage.user !== $scope.detailNeed.user.username;
       $scope.detailModal.show();
     });//angular.copy(need);
@@ -141,9 +147,9 @@ angular.module('starter.controllers')
   .controller('ToDoCtrl',function($scope, Fulfillment) {
     $scope.showCreate = false;
     $scope.reload = function() {
-      Fulfillment.query({user: window.localStorage.user}, function(fulfillments) {
+      Fulfillment.query({user: window.localStorage.user}, function(fulfillment) {
         $scope.needs = [];
-        $scope.fulfillments = fulfillments;
+        $scope.fulfillment = fulfillment;
       });
     }
     $scope.$on('$ionicView.beforeEnter', function() {
