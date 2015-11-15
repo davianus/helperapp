@@ -11,15 +11,15 @@
   <ion-content>
     <div class="list">
       <label class="item item-input">
-        <input type="text" placeholder="Tags" ng-model="subscription.tags">
+        <input ion-autocomplete type="text" readonly="readonly" class="ion-autocomplete" autocomplete="off" ng-model="subscription.tags" items-method="callbackMethod(query)"/>
       </label>
       <label class="item item-input">
         <span class="input-label">Start Date</span>
-        <input type="date" ng-model="subscription.startDate">
+        <input type="date" ng-model="subscription.start">
       </label>
       <label class="item item-input">
         <span class="input-label">End Date</span>
-        <input type="date" ng-model="subscription.endDate">
+        <input type="date" ng-model="subscription.end">
       </label>
     </div>
   </ion-content>
