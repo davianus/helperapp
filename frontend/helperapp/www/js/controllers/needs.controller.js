@@ -68,10 +68,11 @@ angular.module('starter.controllers')
   $scope.fulfillment = new Fulfillment();
   $scope.doFulfillment = function() {
     $scope.fulfillment.user = window.localStorage.user;
-    $scope.fulfillment.until = $filter('date')($scope.fulfillment.untilDate, 'dd.MM.yyyy');
-    $scope.fulfillment = new Fulfillment();
+    $scope.fulfillment.requestId = $scope.detailNeed.id;
+    $scope.fulfillment.until = $filter('date')($scope.fulfillment.untilDate, 'yyyy-MM-dd');
     Fulfillment.save($scope.fulfillment, function() {
       $state.go('app.needs.todo');
+      $scope.fulfillment = new Fulfillment();
     });
   };
 })
