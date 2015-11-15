@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'ngResource', 'ngMessages'])
+angular.module('starter', ['ionic', 'starter.controllers', 'ngResource', 'ngMessages', 'ngCordova'])
   .constant('baseurl','http://localhost:8080/')
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -25,41 +25,40 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngResource', 'ngMess
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
   .state('welcome', {
-      url: '/welcome',
-      templateUrl: 'templates/welcome.html',
-      controller: 'AppCtrl',
-      data: {
-        requireLogin: false
-      }
-    })
-    .state('registration', {
-      url: '/registration',
-      templateUrl: 'templates/registration.html',
-      controller: 'RegistrationCtrl',
-      data: {
-        requireLogin: false
-      }
-    })
+    url: '/welcome',
+    templateUrl: 'templates/welcome.html',
+    controller: 'AppCtrl',
+    data: {
+      requireLogin: false
+    }
+  })
+  .state('registration', {
+    url: '/registration',
+    templateUrl: 'templates/registration.html',
+    controller: 'RegistrationCtrl',
+    data: {
+      requireLogin: false
+    }
+  })
   .state('app', {
-      url: '/app',
-      abstract: true,
-      templateUrl: 'templates/menu.html',
-      controller: 'AppCtrl',
-      data: {
-        requireLogin: true // this property will apply to all children of 'app'
+    url: '/app',
+    abstract: true,
+    templateUrl: 'templates/menu.html',
+    controller: 'AppCtrl',
+    data: {
+      requireLogin: true // this property will apply to all children of 'app'
+    }
+  })
+  .state('app.search', {
+    url: '/search',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/search.html'
       }
-    })
-    .state('app.search', {
-      url: '/search',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/search.html'
-        }
-      }
-    })
-
+    }
+  })
   .state('app.needs', {
-      url:'/needs',
+    url:'/needs',
     abstract: true,
     views: {
       'menuContent': {
@@ -67,63 +66,52 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngResource', 'ngMess
         controller: 'NeedsCtrl'
       }
     }
-    })
-    .state('app.needs.all',{
-      url:'/all',
-      views: {
-        'all-tab': {
-          templateUrl: 'templates/needsList.html',
-          controller: 'AllCtrl'
-        }
+  })
+  .state('app.needs.all',{
+    url:'/all',
+    views: {
+      'all-tab': {
+        templateUrl: 'templates/needs-list.html',
+        controller: 'AllCtrl'
       }
-    })
-    .state('app.needs.byme',{
-      url:'/byme',
-      views: {
-        'byme-tab': {
-          templateUrl: 'templates/needsList.html',
-          controller: 'ByMeCtrl'
-        }
+    }
+  })
+  .state('app.needs.byme',{
+    url:'/byme',
+    views: {
+      'byme-tab': {
+        templateUrl: 'templates/needs-list.html',
+        controller: 'ByMeCtrl'
       }
-    })
-    .state('app.needs.forme',{
-      url:'/forme',
-      views: {
-        'forme-tab': {
-          templateUrl: 'templates/needsList.html',
-          controller: 'ForMeCtrl'
-        }
+    }
+  })
+  .state('app.needs.forme',{
+    url:'/forme',
+    views: {
+      'forme-tab': {
+        templateUrl: 'templates/needs-list.html',
+        controller: 'ForMeCtrl'
       }
-    })
-    .state('app.needs.todo',{
-      url:'/todo',
-      views: {
-        'todo-tab': {
-          templateUrl: 'templates/needsList.html',
-          controller: 'ToDoCtrl'
-        }
+    }
+  })
+  .state('app.needs.todo',{
+    url:'/todo',
+    views: {
+      'todo-tab': {
+        templateUrl: 'templates/needs-list.html',
+        controller: 'ToDoCtrl'
       }
-    })
-    .state('app.newNeed',{
-      url:'/newNeed',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/newNeed.html',
-          controller: 'NewNeedCtrl'
-        }
+    }
+  })
+  .state('app.subscriptions', {
+    url: '/subscriptions',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/subscriptions.html',
+        controller: 'SubscriptionCtrl'
       }
-
-    })
-
-  .state('app.needDetail', {
-    url: '/needDetail/:needId',
-      views: {
-        'menuContent': {
-        templateUrl: 'templates/needDetail.html',
-        controller: 'NeedDetailCtrl'
-        }
-      }
-    });
+    }
+  });
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/welcome');
 });

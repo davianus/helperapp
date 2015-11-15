@@ -1,0 +1,16 @@
+<ion-view view-title="{{title}}">
+  <ion-nav-buttons side="right">
+    <button class="button button-clear button-positive" ng-click="create()">
+      Create
+    </button>
+  </ion-nav-buttons>
+<ion-content>
+    <ion-list>
+      <ion-item ng-repeat="need in needs" ng-click="show(need)">
+        <span ng-repeat="tag in need.tags">#{{tag}} </span>
+        <br>{{need.owner}}
+        <br>{{need.remaining}}
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

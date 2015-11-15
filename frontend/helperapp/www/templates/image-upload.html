@@ -1,0 +1,15 @@
+<ion-modal-view>
+  <ion-header-bar>
+    <div class="buttons">
+      <button class="button button-clear button-assertive" ng-click="closeUpload()">Cancel</button>
+    </div>
+    <h1 class="title">Upload Image</h1>
+    <div class="buttons">
+      <button class="button button-clear button-positive" ng-click="doUpload()">Save</button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+    <img ng-src="{{photo}}">
+    <button class="button button-light" ng-click="changeImage()">Select other photo</button>
+  </ion-content>
+</ion-modal-view>
