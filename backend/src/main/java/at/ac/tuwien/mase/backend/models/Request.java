@@ -2,6 +2,7 @@ package at.ac.tuwien.mase.backend.models;
 
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class Request {
     private List<Tag> tags;
 
     @OneToMany(mappedBy = "request")
-    private List<Fulfillment> fulfillments;
+    private List<Fulfillment> fulfillments = new ArrayList<>();
 
     @ManyToOne(targetEntity = User.class)
     private User user;

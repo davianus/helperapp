@@ -7,9 +7,9 @@
 <ion-content>
     <ion-list>
       <ion-item ng-repeat="need in needs" ng-click="show(need)">
-        <span ng-repeat="tag in need.tags">#{{tag}} </span>
-        <br>{{need.owner}}
-        <br>{{need.remaining}}
+        <span ng-repeat="tag in need.tags" class="entryTitle">{{tag}} </span><br/>
+		<span>Amount required: {{need.amount - need.amountDone}}</span><br/>
+		<span>Requested by: {{need.user.username}}</span>
       </ion-item>
     </ion-list>
   </ion-content>
