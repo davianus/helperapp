@@ -12,10 +12,19 @@
           <span class="input-label">Username</span>
           <input type="text" ng-model="loginData.username">
         </label>
-        <label class="item item-input" ng-class="{ 'has-error' : error}">
+<<<<<<< HEAD
+        <label class="item item-input item-floating-label" ng-class="{ 'has-error' : error}">
+          <span class="input-label">Password</span>
+          <input type="password" placeholder="Password" ng-model="loginData.password">
+
+=======
+        <label class="item item-input" ng-class="{ 'has-error' : loginForm.loginData.password.$invalid}">
           <span class="input-label">Password</span>
           <input type="password" ng-model="loginData.password">
-
+          <div class="form-errors" ng-show="loginForm.loginData.password.$error && loginForm.$submitted" ng-messages="loginForm.loginData.password.$error" >
+            <div class="form-error" ng-message="wrong">Invalid password or username</div>
+          </div>
+>>>>>>> 5f2c636fda8daa63489411c199b23adb80585bb8
         </label>
         <div class="form-errors" ng-show="error" >
           <div class="form-error" > {{errorMessage}}</div>

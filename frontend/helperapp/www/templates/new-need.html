@@ -1,0 +1,39 @@
+<ion-modal-view>
+  <ion-header-bar>
+    <div class="buttons">
+      <button class="button button-clear button-assertive" ng-click="closeCreate()">Cancel</button>
+    </div>
+    <h1 class="title">Create/Edit Need</h1>
+    <div class="buttons">
+      <button class="button button-clear button-positive" ng-click="doCreate()">Save</button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+    <div class="list">
+      <label class="item item-input">
+        <span class="input-label">Start Date</span>
+        <input type="datetime" placeholder="Start Date" ng-model="need.startDate">
+      </label>
+      <label class="item item-input">
+        <span class="input-label">End Date</span>
+        <input type="datetime" placeholder="End Date" ng-model="need.endDate">
+      </label>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Description</span>
+        <input type="text" placeholder="Description" ng-model="need.description">
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Amount</span>
+        <input type="number" placeholder="Amount" ng-model="need.amount">
+      </label>
+      <label class="item item-input" >
+        <span class="input-label">Tags</span>
+        <input type="text" placeholder="Tags" ng-model="need.tags">
+      </label>
+
+      <button class="button button-block button-positive" type="submit">
+        Create
+      </button>
+    </div>
+  </ion-content>
+</ion-modal-view>

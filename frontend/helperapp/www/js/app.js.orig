@@ -4,7 +4,11 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'ngResource', 'ngCordova'])
+<<<<<<< HEAD
+angular.module('starter', ['ionic', 'starter.controllers', 'ngResource'])
+=======
+angular.module('starter', ['ionic', 'starter.controllers', 'ngResource', 'ngMessages', 'ngCordova'])
+>>>>>>> 5f2c636fda8daa63489411c199b23adb80585bb8
   .constant('baseurl','http://localhost:8080/')
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
