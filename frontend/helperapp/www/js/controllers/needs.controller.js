@@ -48,9 +48,10 @@ angular.module('starter.controllers')
 
     need.user = {username:window.localStorage['user']};
     need.location = {name:'Wien',location:[0,0]};
-    Need.post(need);
-    // Simulate a login delay. Remove this and replace with your login
-    // code if using a login system
+    Need.post(need,function(resp) {
+      closeDetail();
+      $state.go('app.needs.byme');
+    });
 
   };
 
@@ -59,44 +60,58 @@ angular.module('starter.controllers')
     $scope.detailModal.hide();
   };
 
-  // Open the login modal
+
   $scope.show = function(need) {
-    $scope.detailNeed = angular.copy(need);
-    $scope.detailModal.show();
+    Need.get({id:need.id},function(need){
+      $scope.detailNeed = need;
+      $scope.detailNeed.location = "Wien";
+      $scope.detailModal.show();
+    });//angular.copy(need);
+
   };
 
-  $scope.newNeed = function() {
+  $scope.newNeed = function(need) {
     $state.go('app.newNeed');
   }
   //$scope.needs = Need.query();
+
+  $scope.editNeed = function(need) {
+    $scope.need = angular.copy(need);
+    $scope.need.startDate = new Date(Date.parse($scope.need.startDate));
+    $scope.need.endDate = new Date(Date.parse($scope.need.endDate));
+    $scope.newNeed(need);
+  }
+
+  $scope.deleteNeed = function(need) {
+    var need = angular.copy(need);
+    //need.user = window.localStorage.user;
+    Need.delete(need, function() {
+      $scope.reload();
+    });
+  }
+
 })
   .controller('AllCtrl',function($scope,Need) {
-    $scope.needs = Need.query({'filter':'all'});
-    /*$scope.needs = [
-      {id: 1, owner: "Caritas", tags:[{name:'Sessel'},{name:'Stühle'}], amount: '200 Stk.'},
-      {id: 2, owner: "Diakonie", tags:[{name:'Essen'},{name:'Babynahrung'}], amount: '50 Stk.'},
-      {id: 3, owner: "Rotes Kreuz", tags:[{name:'Schuhe'}], amount: '20 Stk.'}
-    ]*/
+    $scope.reload = function() {
+      $scope.needs = Need.query({'filter': 'all'});
+    }
+    $scope.reload();
   }).controller('ByMeCtrl',function($scope,Need) {
-    $scope.needs = Need.query({'filter':'user','user':window.localStorage['user']});
-
-    /*$scope.needs = [
-      {id: 1, owner: "By Me", tags:[{name:'Sessel'},{name:'Stühle'}], amount: '200 Stk.'},
-      {id: 2, owner: "By Me", tags:[{name:'Essen'},{name:'Babynahrung'}], amount: '50 Stk.'}
-    ]*/
+  $scope.reload = function() {
+    $scope.needs = Need.query({'filter': 'user', 'user': window.localStorage['user']});
+  }
+    $scope.reload();
   })
   .controller('ForMeCtrl',function($scope,Need) {
-    $scope.needs = Need.query({'filter':'subscriptions','user':window.localStorage['user']});
+    $scope.reload = function() {
+      $scope.needs = Need.query({'filter': 'subscriptions', 'user': window.localStorage['user']});
+    }
+    $scope.reload();
 
-    /*$scope.needs = [
-      {id: 1, owner: "Caritas", tags:[{name:'Sessel'},{name:'Stühle'}], amount: '200 Stk.'},
-      {id: 2, owner: "Diakonie", tags:[{name:'Essen'},{name:'Babynahrung'}], amount: '50 Stk.'}
-    ]*/
   })
   .controller('ToDoCtrl',function($scope,Need) {
-    $scope.needs = {};
-    /*$scope.needs = [
-      {id: 1, owner: "Caritas", tags:[{name:'Sessel'},{name:'Stühle'}], amount: '200 Stk.'}
-
-    ]*/
+    $scope.reload = function() {
+      $scope.needs = {};
+    }
+    $scope.reload();
   });
