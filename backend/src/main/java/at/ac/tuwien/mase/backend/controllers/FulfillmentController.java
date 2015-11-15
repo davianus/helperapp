@@ -57,7 +57,7 @@ public class FulfillmentController {
         fulfillment.setUser(user);
         fulfillment.setRequest(request);
         fulfillmentRepository.save(fulfillment);
-        return new FulfillmentRead(fulfillment, true);
+        return new FulfillmentRead(fulfillment);
     }
 
     @RequestMapping(value="/{id}", method=RequestMethod.GET)
@@ -66,7 +66,7 @@ public class FulfillmentController {
         if (user == null ) throw new ControllerException("User not found.");
         Fulfillment fulfillment = fulfillmentRepository.findOne(id);
         if (fulfillment == null ) throw new ControllerException("Fulfillment not found.");
-        return new FulfillmentRead(fulfillment, true);
+        return new FulfillmentRead(fulfillment);
     }
 
     @RequestMapping(value="/{id}", method=RequestMethod.POST)
@@ -79,7 +79,7 @@ public class FulfillmentController {
         if (fulfillmentEdit.getUntil() != null) fulfillment.setUntil(fulfillmentEdit.getUntil());
         if (fulfillmentEdit.getDone() != null) fulfillment.setDone(fulfillmentEdit.getDone());
         fulfillmentRepository.save(fulfillment);
-        return new FulfillmentRead(fulfillment, true);
+        return new FulfillmentRead(fulfillment);
     }
 
     @RequestMapping(value="/{id}", method=RequestMethod.DELETE)

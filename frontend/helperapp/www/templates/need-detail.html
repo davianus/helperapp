@@ -7,7 +7,7 @@
   </ion-header-bar>
   <ion-content>
     <p class="tags detailTitle generalPadding">
-      <span ng-repeat="tag in detailNeed.tags">{{tag}} </span>
+      <span ng-repeat="tag in detailNeed.tags">{{tag}}{{$last ? '' : ', '}}</span>
     </p>
     <p class="date generalPadding">{{detailNeed.startDate | date:'short'}} - {{detailNeed.endDate | date:'short'}}</p>
     <p class="description generalPadding">Description: {{detailNeed.description}}</p>
