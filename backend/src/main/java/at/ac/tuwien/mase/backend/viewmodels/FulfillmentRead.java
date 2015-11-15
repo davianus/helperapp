@@ -11,12 +11,14 @@ public class FulfillmentRead {
     private long id;
     private Date until;
     private int amount;
+    private boolean done;
     private RequestRead request;
 
     public FulfillmentRead(Fulfillment fulfillment) {
         this.id = fulfillment.getId();
         this.until = fulfillment.getUntil();
         this.amount = fulfillment.getAmount();
+        this.done = fulfillment.isDone();
     }
 
     public FulfillmentRead(Fulfillment fulfillment, boolean deep) {
@@ -56,5 +58,13 @@ public class FulfillmentRead {
 
     public void setRequest(RequestRead request) {
         this.request = request;
+    }
+
+    public boolean isDone() {
+        return done;
+    }
+
+    public void setDone(boolean done) {
+        this.done = done;
     }
 }
