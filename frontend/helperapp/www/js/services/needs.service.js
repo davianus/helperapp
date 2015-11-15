@@ -11,7 +11,7 @@ angular.module('starter.controllers')
         return data;
       }*/
     },
-    'update': { method:'PUT' },
-    'post': { method: 'POST'}
+    'update': { method:'PUT' ,  transformResponse: []},
+    'post': { method: 'POST',  transformResponse: []}
   });
 });

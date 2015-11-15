@@ -25,12 +25,13 @@ angular.module('starter.controllers')
   $scope.create = function() {
     $scope.createModal.show();
   };
-
+  $scope.need = {};
   // Perform the login action when the user submits the login form
-  $scope.doCreate = function() {
+  $scope.doCreate = function(need) {
     //console.log('Doing login', $scope.loginData);
-    //TODO: check password
 
+    need.user = {username:window.localStorage['user']};
+    Need.post(need);
     // Simulate a login delay. Remove this and replace with your login
     // code if using a login system
 
@@ -50,7 +51,7 @@ angular.module('starter.controllers')
   $scope.newNeed = function() {
     $state.go('app.newNeed');
   }
-  $scope.needs = Need.query({tags:'Essen'});
+  $scope.needs = Need.query();
 })
   .controller('AllCtrl',function($scope) {
     /*$scope.needs = [
