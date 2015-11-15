@@ -79,6 +79,7 @@ angular.module('starter.controllers')
     $scope.fulfillment.until = $filter('date')($scope.fulfillment.untilDate, 'yyyy-MM-dd');
     Fulfillment.save($scope.fulfillment, function() {
       $state.go('app.needs.todo');
+      $scope.closeDetail();
       $scope.fulfillment = new Fulfillment();
     });
   };
