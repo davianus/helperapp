@@ -1,5 +1,7 @@
 package at.ac.tuwien.mase.backend.viewmodels;
 
+import at.ac.tuwien.mase.backend.models.User;
+
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +15,7 @@ public class RequestEdit {
     private Date endDate;
     private String description;
     private LocationEdit location;
+    private UserEdit user;
 
     public List<String> getTags() {
         return tags;
@@ -60,5 +63,13 @@ public class RequestEdit {
 
     public void setLocation(LocationEdit location) {
         this.location = location;
+    }
+
+    public UserEdit getUser() {
+        return user;
+    }
+
+    public void setUser(UserEdit user) {
+        this.user = user;
     }
 }

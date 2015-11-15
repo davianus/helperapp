@@ -2,7 +2,7 @@
  * Created by MiiKE on 14.11.2015.
  */
 angular.module('starter.controllers')
-.controller('NeedsCtrl',function($scope, $state, Need) {
+.controller('NeedsCtrl',function($scope, $state, Need, $ionicModal) {
 
   $ionicModal.fromTemplateUrl('templates/new-need.html', {
     scope: $scope
@@ -33,9 +33,7 @@ angular.module('starter.controllers')
 
     // Simulate a login delay. Remove this and replace with your login
     // code if using a login system
-    $timeout(function() {
-      $scope.closeCreate();
-    }, 1000);
+
   };
 
   // Triggered in the login modal to close it
