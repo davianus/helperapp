@@ -16,8 +16,8 @@
     <h3 class="generalPadding">Contact</h3>
     <p class="generalPadding">{{detailNeed.user.name}}</p>
     <p class="generalPadding">{{detailNeed.user.phone}}</p>
-    <p class="generalPadding">{{detailNeed.location}}</p>
-    <form class="fulfill-form" ng-submit="doFulfillment()" ng-show="notMyNeed">
+    <p class="generalPadding">{{detailNeed.location.name}}</p>
+    <form class="fulfill-form" ng-submit="doFulfillment()" ng-show="notMyNeed && notFulfilled">
       <div class="list">
         <label class="item item-input">
           <span class="input-label">Until Date</span>
@@ -30,7 +30,9 @@
       </div>
       <button class="button button-block button-positive" type="submit">Fulfill</button>
     </form>
-      <ion-list ng-hide="notMyNeed">
+    <div ng-hide="notMyNeed">
+      <h2>Fulfillments</h2>
+      <ion-list>
         <ion-item ng-repeat="fulfillment in detailNeed.fulfillments" ng-class="{done: fulfillment.done}">
           <p>{{fulfillment.until | date:'short'}}</p>
           <p>{{fulfillment.amount}}</p>
