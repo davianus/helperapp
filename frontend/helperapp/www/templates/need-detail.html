@@ -30,7 +30,7 @@
       <button class="button button-block button-positive" type="submit">Fulfill</button>
     </form>
       <ion-list ng-hide="notMyNeed">
-        <ion-item ng-repeat="fulfillment in detailNeed.fulfillments" ng-class="done: fulfillment.done">
+        <ion-item ng-repeat="fulfillment in detailNeed.fulfillments" ng-class="{done: fulfillment.done}">
           <p>{{fulfillment.until | date:'short'}}</p>
           <p>{{fulfillment.amount}}</p>
           <ion-option-button class="button-balanced" ng-click="doneFulfillment(fulfillment)">Done</ion-option-button>
