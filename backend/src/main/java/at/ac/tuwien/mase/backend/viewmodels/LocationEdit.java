@@ -4,15 +4,15 @@ package at.ac.tuwien.mase.backend.viewmodels;
  * Created by lobmaier on 14.11.2015.
  */
 public class LocationEdit {
-    private long id;
+    private Long id;
     private String name;
     private double[] location;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

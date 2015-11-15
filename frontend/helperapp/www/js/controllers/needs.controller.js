@@ -2,7 +2,23 @@
  * Created by MiiKE on 14.11.2015.
  */
 angular.module('starter.controllers')
-.controller('NeedsCtrl',function($scope, $state, Need, $ionicModal) {
+.controller('NeedsCtrl',function($scope, $state, Need, $ionicModal, Tag) {
+
+  $scope.callbackMethod = function (query) {
+
+    var tags = Tag.query({
+      q: query
+    }).$promise.then(function(result) {
+      var tags = result;
+      if (tags.length === 0) {
+        tags.push(query);
+      }
+
+      return tags;
+    });
+
+    return tags;
+  }
 
   $ionicModal.fromTemplateUrl('templates/new-need.html', {
     scope: $scope
@@ -31,6 +47,7 @@ angular.module('starter.controllers')
     //console.log('Doing login', $scope.loginData);
 
     need.user = {username:window.localStorage['user']};
+    need.location = {name:'Wien',location:[0,0]};
     Need.post(need);
     // Simulate a login delay. Remove this and replace with your login
     // code if using a login system
@@ -51,27 +68,33 @@ angular.module('starter.controllers')
   $scope.newNeed = function() {
     $state.go('app.newNeed');
   }
-  $scope.needs = Need.query();
+  //$scope.needs = Need.query();
 })
-  .controller('AllCtrl',function($scope) {
+  .controller('AllCtrl',function($scope,Need) {
+    $scope.needs = Need.query({'filter':'all'});
     /*$scope.needs = [
       {id: 1, owner: "Caritas", tags:[{name:'Sessel'},{name:'Stühle'}], amount: '200 Stk.'},
       {id: 2, owner: "Diakonie", tags:[{name:'Essen'},{name:'Babynahrung'}], amount: '50 Stk.'},
       {id: 3, owner: "Rotes Kreuz", tags:[{name:'Schuhe'}], amount: '20 Stk.'}
     ]*/
-  }).controller('ByMeCtrl',function($scope) {
+  }).controller('ByMeCtrl',function($scope,Need) {
+    $scope.needs = Need.query({'filter':'user','user':window.localStorage['user']});
+
     /*$scope.needs = [
       {id: 1, owner: "By Me", tags:[{name:'Sessel'},{name:'Stühle'}], amount: '200 Stk.'},
       {id: 2, owner: "By Me", tags:[{name:'Essen'},{name:'Babynahrung'}], amount: '50 Stk.'}
     ]*/
   })
-  .controller('ForMeCtrl',function($scope) {
+  .controller('ForMeCtrl',function($scope,Need) {
+    $scope.needs = Need.query({'filter':'subscriptions','user':window.localStorage['user']});
+
     /*$scope.needs = [
       {id: 1, owner: "Caritas", tags:[{name:'Sessel'},{name:'Stühle'}], amount: '200 Stk.'},
       {id: 2, owner: "Diakonie", tags:[{name:'Essen'},{name:'Babynahrung'}], amount: '50 Stk.'}
     ]*/
   })
-  .controller('ToDoCtrl',function($scope) {
+  .controller('ToDoCtrl',function($scope,Need) {
+    $scope.needs = {};
     /*$scope.needs = [
       {id: 1, owner: "Caritas", tags:[{name:'Sessel'},{name:'Stühle'}], amount: '200 Stk.'}
 
