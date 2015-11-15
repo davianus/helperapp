@@ -9,6 +9,7 @@ public class FulfillmentEdit {
     private Date until;
     private Integer amount;
     private Long requestId;
+    private Boolean done;
 
     public Date getUntil() {
         return until;
@@ -32,5 +33,13 @@ public class FulfillmentEdit {
 
     public void setRequestId(Long requestId) {
         this.requestId = requestId;
+    }
+
+    public Boolean getDone() {
+        return done;
+    }
+
+    public void setDone(Boolean done) {
+        this.done = done;
     }
 }

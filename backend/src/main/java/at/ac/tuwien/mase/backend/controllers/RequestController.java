@@ -3,6 +3,7 @@ package at.ac.tuwien.mase.backend.controllers;
 import at.ac.tuwien.mase.backend.controllers.exceptions.ControllerException;
 import at.ac.tuwien.mase.backend.models.*;
 import at.ac.tuwien.mase.backend.repositories.interfaces.*;
+import at.ac.tuwien.mase.backend.viewmodels.FulfillmentRead;
 import at.ac.tuwien.mase.backend.viewmodels.RequestEdit;
 import at.ac.tuwien.mase.backend.viewmodels.RequestRead;
 import org.apache.log4j.LogManager;
@@ -54,11 +55,11 @@ public class RequestController {
             c.add(Calendar.YEAR, 1);
             end = c.getTime();
         }
-        String[] tagList = tags.split(",");
         List<RequestRead> rs = new LinkedList<RequestRead>();
         for (Request r : requestRepository.findByDate(start, end)) {
             RequestRead rr = new RequestRead(r);
-            if (rr.getAmountDone() >= rr.getAmount()) continue;
+            if (rr.getFulfillments().stream().allMatch((FulfillmentRead f) -> f.isDone())) continue;
+            if (rr.getAmountDone() >= rr.getAmount() && !filter.equals("user")) continue;
             if (tags != null && tags != "" && !rr.getTags().containsAll(Arrays.asList(tags.split(",")))) continue;
             if (filter.equals("user") && rr.getUser().getId() != u.getId()) continue;
             if (filter.equals("subscriptions") && !subscriptionRepository.findByUser(u)

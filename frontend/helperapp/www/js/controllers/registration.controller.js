@@ -4,6 +4,10 @@ angular.module('starter.controllers')
 
   // Form data for the login modal
   $scope.loginData = {};
+  $scope.loginForm = {loginData:{password:{}}};
+  $scope.error = false;
+  $scope.errorMessage = 'Error';
+
 
   // Create the login modal that we will use later
   $ionicModal.fromTemplateUrl('templates/login.html', {
@@ -38,7 +42,8 @@ angular.module('starter.controllers')
         $state.go('app.needs.byme')
       }, function(resp) {
         //error
-        $scope.loginForm.loginData.password.$error = "Error";
+        $scope.error = true;
+        $scope.errorMessage = resp.data.message;
       });
 
 
