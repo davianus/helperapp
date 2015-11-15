@@ -33,7 +33,7 @@ angular.module('starter.controllers')
         //Success
         window.localStorage['user'] = loginData.username;
         $scope.closeLogin();
-        $state.go('app.needs.byme');
+        $state.go('app.needs.all');
       }, function(resp) {
         //error
         $scope.error = true;

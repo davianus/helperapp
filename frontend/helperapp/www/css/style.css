@@ -131,6 +131,6 @@ label.item.valid-lr {
 	  padding: 2px 0 2px 16px;
 }
 
-.done {
-  background-color: rgba(0,255,0,.4);
+.done .item-content {
+  background-color: rgba(0,255,0,.8);
 }
