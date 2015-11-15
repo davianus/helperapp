@@ -2,7 +2,7 @@
  * Created by MiiKE on 14.11.2015.
  */
 angular.module('starter.controllers')
-.controller('NeedsCtrl',function($scope, $state, Need, $ionicModal, Tag) {
+.controller('NeedsCtrl',function($scope, $state, Need, $ionicModal, Tag, Fulfillment) {
 
   $scope.callbackMethod = function (query) {
 
@@ -65,38 +65,24 @@ angular.module('starter.controllers')
     $scope.detailModal.show();
   };
 
-  $scope.newNeed = function() {
-    $state.go('app.newNeed');
-  }
-  //$scope.needs = Need.query();
+  $scope.fulfillment = new Fulfillment();
+  $scope.doFulfillment = function() {
+    $scope.fulfillment.user = window.localStorage.user;
+    $scope.fulfillment.until = $filter('date')($scope.fulfillment.untilDate, 'dd.MM.yyyy');
+    $scope.fulfillment = new Fulfillment();
+    Fulfillment.save($scope.fulfillment, function() {
+      $state.go('app.needs.todo');
+    });
+  };
 })
   .controller('AllCtrl',function($scope,Need) {
     $scope.needs = Need.query({'filter':'all'});
-    /*$scope.needs = [
-      {id: 1, owner: "Caritas", tags:[{name:'Sessel'},{name:'Stühle'}], amount: '200 Stk.'},
-      {id: 2, owner: "Diakonie", tags:[{name:'Essen'},{name:'Babynahrung'}], amount: '50 Stk.'},
-      {id: 3, owner: "Rotes Kreuz", tags:[{name:'Schuhe'}], amount: '20 Stk.'}
-    ]*/
   }).controller('ByMeCtrl',function($scope,Need) {
     $scope.needs = Need.query({'filter':'user','user':window.localStorage['user']});
-
-    /*$scope.needs = [
-      {id: 1, owner: "By Me", tags:[{name:'Sessel'},{name:'Stühle'}], amount: '200 Stk.'},
-      {id: 2, owner: "By Me", tags:[{name:'Essen'},{name:'Babynahrung'}], amount: '50 Stk.'}
-    ]*/
   })
   .controller('ForMeCtrl',function($scope,Need) {
     $scope.needs = Need.query({'filter':'subscriptions','user':window.localStorage['user']});
-
-    /*$scope.needs = [
-      {id: 1, owner: "Caritas", tags:[{name:'Sessel'},{name:'Stühle'}], amount: '200 Stk.'},
-      {id: 2, owner: "Diakonie", tags:[{name:'Essen'},{name:'Babynahrung'}], amount: '50 Stk.'}
-    ]*/
   })
-  .controller('ToDoCtrl',function($scope,Need) {
-    $scope.needs = {};
-    /*$scope.needs = [
-      {id: 1, owner: "Caritas", tags:[{name:'Sessel'},{name:'Stühle'}], amount: '200 Stk.'}
-
-    ]*/
+  .controller('ToDoCtrl',function($scope, Fulfillment) {
+    $scope.needs = Fulfillment.query({user: window.localStorage.user});
   });
