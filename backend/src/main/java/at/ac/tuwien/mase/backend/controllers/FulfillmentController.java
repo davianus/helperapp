@@ -74,7 +74,7 @@ public class FulfillmentController {
         User user = userRepository.findByUsername(username);
         if (user == null ) throw new ControllerException("User not found.");
         Fulfillment fulfillment = fulfillmentRepository.findOne(id);
-        if (fulfillment == null || fulfillment.getUser().getId() != user.getId()) throw new ControllerException("Fulfillment not found.");
+        if (fulfillment == null) throw new ControllerException("Fulfillment not found.");
         if (fulfillmentEdit.getAmount() != null) fulfillment.setAmount(fulfillmentEdit.getAmount());
         if (fulfillmentEdit.getUntil() != null) fulfillment.setUntil(fulfillmentEdit.getUntil());
         if (fulfillmentEdit.getDone() != null) fulfillment.setDone(fulfillmentEdit.getDone());
