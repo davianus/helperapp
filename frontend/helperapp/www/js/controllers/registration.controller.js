@@ -33,7 +33,7 @@ angular.module('starter.controllers')
         //Success
         window.localStorage['user'] = loginData.username;
         $scope.closeLogin();
-        $state.go('app.needs.byme');
+        $state.go('app.needs.all');
       }, function(resp) {
         //error
         $scope.error = true;
@@ -53,6 +53,6 @@ angular.module('starter.controllers')
     // TODO: Check password if(user.password == user.confirmPw)
     User.post(user);
     window.localStorage['user'] = user.username;
-    $state.go('app.needs.byme');
+    $scope.login();
   };
 });
