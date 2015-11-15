@@ -15,12 +15,6 @@ angular.module('starter.controllers')
     $scope.loginModal = modal;
   });
 
-  $ionicModal.fromTemplateUrl('templates/image-upload.html', {
-    scope: $scope
-  }).then(function(modal) {
-    $scope.uploadModal = modal;
-  });
-
   // Triggered in the login modal to close it
   $scope.closeLogin = function() {
     $scope.loginModal.hide();
@@ -52,47 +46,6 @@ angular.module('starter.controllers')
     $timeout(function() {
 
     }, 1000);
-  };
-
-  $scope.closeUpload = function() {
-    $scope.uploadModal.hide();
-    $scope.photo = "";
-  };
-
-  $scope.upload = function() {
-    $scope.uploadModal.show();
-    initializeCamera();
-  };
-
-  $scope.doUpload = function() {
-    $scope.uploadModal.hide();
-  };
-
-  $scope.changeImage = function() {
-    initializeCamera();
-  };
-
-  var initializeCamera = function() {
-    document.addEventListener("deviceready", function () {
-      var options = {
-        quality: 50,
-        destinationType: Camera.DestinationType.DATA_URL,
-        sourceType: Camera.PictureSourceType.CAMERA,
-        allowEdit: true,
-        encodingType: Camera.EncodingType.JPEG,
-        targetWidth: 100,
-        targetHeight: 100,
-        popoverOptions: CameraPopoverOptions,
-        saveToPhotoAlbum: false,
-        correctOrientation:true
-      };
-
-      $cordovaCamera.getPicture(options).then(function(imageData) {
-        $scope.photo = "data:image/jpeg;base64," + imageData;
-      }, function(err) {
-        // error
-      });
-    });
   };
 
   $scope.user = {};

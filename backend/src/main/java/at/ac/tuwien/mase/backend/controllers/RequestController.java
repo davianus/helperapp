@@ -80,9 +80,11 @@ public class RequestController {
                 requestCreate.getAmount() == null ||
                 requestCreate.getDescription() == null ||
                 requestCreate.getStartDate() == null ||
-                requestCreate.getEndDate() == null) {
+                requestCreate.getEndDate() == null ||
+                requestCreate.getUser() == null) {
             throw new ControllerException("Not all required attributes given.");
         }
+        User user = userRepository.findByUsername(requestCreate.getUser().getUsername());
         Request request = new Request();
         List<Tag> ts = new LinkedList<>();
         for (String tag :requestCreate.getTags()) {
@@ -111,6 +113,7 @@ public class RequestController {
         request.setDescription(requestCreate.getDescription());
         request.setStartDate(requestCreate.getStartDate());
         request.setEndDate(requestCreate.getEndDate());
+        request.setUser(user);
         requestRepository.save(request);
         return new RequestRead(request, true);
     }
