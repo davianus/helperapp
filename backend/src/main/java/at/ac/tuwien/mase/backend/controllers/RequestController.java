@@ -62,10 +62,10 @@ public class RequestController {
             if (rr.getAmountDone() >= rr.getAmount() && !filter.equals("user")) continue;
             if (tags != null && tags != "" && !rr.getTags().containsAll(Arrays.asList(tags.split(",")))) continue;
             if (filter.equals("user") && rr.getUser().getId() != u.getId()) continue;
-            if (filter.equals("subscriptions") && !subscriptionRepository.findByUser(u)
+            if (filter.equals("subscriptions") && (!subscriptionRepository.findByUser(u)
                     .stream().anyMatch((Subscription s) -> rr.getTags().containsAll(
                             s.getTags().stream().map(Tag::getName).collect(Collectors.toList()))
-                    ) && rr.getUser().getId() == u.getId())
+                    ) || rr.getUser().getId() == u.getId()))
                 continue;
             rs.add(rr);
             if (rs.size() == 10) break;
