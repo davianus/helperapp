@@ -30,7 +30,8 @@ public class FulfillmentController {
     public List<FulfillmentRead> readAll(@PathVariable("username") String username) throws ControllerException {
         User user = userRepository.findByUsername(username);
         if (user == null ) throw new ControllerException("User not found.");
-        List<Fulfillment> fulfillments = fulfillmentRepository.findByUser(user);
+        List<Fulfillment> fulfillments = fulfillmentRepository.findByUser(user)
+                .stream().filter((Fulfillment f) -> !f.isDone()).collect(Collectors.toList());
         return fulfillments.stream().map(FulfillmentRead::new).collect(Collectors.toList());
     }
 
@@ -68,6 +69,7 @@ public class FulfillmentController {
         if (fulfillment == null || fulfillment.getUser().getId() != user.getId()) throw new ControllerException("Fulfillment not found.");
         if (fulfillmentEdit.getAmount() != null) fulfillment.setAmount(fulfillmentEdit.getAmount());
         if (fulfillmentEdit.getUntil() != null) fulfillment.setUntil(fulfillmentEdit.getUntil());
+        if (fulfillmentEdit.getDone() != null) fulfillment.setDone(fulfillmentEdit.getDone());
         fulfillmentRepository.save(fulfillment);
         return new FulfillmentRead(fulfillment, true);
     }
