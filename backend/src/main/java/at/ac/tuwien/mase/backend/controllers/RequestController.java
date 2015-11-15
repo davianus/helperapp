@@ -116,7 +116,6 @@ public class RequestController {
         request.setEndDate(requestCreate.getEndDate());
         request.setUser(user);
         requestRepository.save(request);
-        request = requestRepository.findOne(request.getId());
         return new RequestRead(request, true);
     }
 

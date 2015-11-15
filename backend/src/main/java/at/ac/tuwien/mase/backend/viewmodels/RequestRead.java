@@ -27,7 +27,7 @@ public class RequestRead {
         this.id = request.getId();
         this.tags = request.getTags().stream().map(Tag::getName).collect(Collectors.toList());
         this.amount = request.getAmount();
-        this.amountDone = request.getFulfillments().stream().mapToInt(Fulfillment::getAmount).sum();
+        if (request.getFulfillments() != null) this.amountDone = request.getFulfillments().stream().mapToInt(Fulfillment::getAmount).sum();
         this.startDate = request.getStartDate();
         this.endDate = request.getEndDate();
         this.user = new UserRead(request.getUser());
