@@ -65,7 +65,7 @@ public class RequestController {
             if (filter.equals("subscriptions") && !subscriptionRepository.findByUser(u)
                     .stream().anyMatch((Subscription s) -> rr.getTags().containsAll(
                             s.getTags().stream().map(Tag::getName).collect(Collectors.toList()))
-                    ))
+                    ) && rr.getUser().getId() == u.getId())
                 continue;
             rs.add(rr);
             if (rs.size() == 10) break;
