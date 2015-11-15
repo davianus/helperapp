@@ -101,7 +101,8 @@ public class RequestController {
             ts.add(t);
         }
         request.setTags(ts);
-        Location l = locationRepository.findOne(requestCreate.getLocation().getId());
+        Location l = null;
+        if (requestCreate.getLocation().getId() != null) l = locationRepository.findOne(requestCreate.getLocation().getId());
         if (l == null) {
             l = new Location();
             l.setName(requestCreate.getLocation().getName());
@@ -148,7 +149,8 @@ public class RequestController {
             request.setTags(ts);
         }
         if (requestEdit.getLocation() != null) {
-            Location l = locationRepository.findOne(requestEdit.getLocation().getId());
+            Location l = null;
+            if (requestEdit.getLocation().getId() != null) l = locationRepository.findOne(requestEdit.getLocation().getId());
             if (l == null) {
                 l = new Location();
                 l.setName(requestEdit.getLocation().getName());
