@@ -58,7 +58,7 @@ public class RequestController {
         List<RequestRead> rs = new LinkedList<RequestRead>();
         for (Request r : requestRepository.findByDate(start, end)) {
             RequestRead rr = new RequestRead(r);
-            if (rr.getFulfillments().stream().allMatch((FulfillmentRead f) -> f.isDone())) continue;
+            if (rr.getFulfillments() != null && rr.getFulfillments().stream().allMatch((FulfillmentRead f) -> f.isDone())) continue;
             if (rr.getAmountDone() >= rr.getAmount() && !filter.equals("user")) continue;
             if (tags != null && tags != "" && !rr.getTags().containsAll(Arrays.asList(tags.split(",")))) continue;
             if (filter.equals("user") && rr.getUser().getId() != u.getId()) continue;
