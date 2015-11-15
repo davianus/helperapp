@@ -2,7 +2,7 @@
  * Created by MiiKE on 14.11.2015.
  */
 angular.module('starter.controllers')
-.controller('NeedsCtrl',function($scope, $state, Need, $ionicModal, Tag, Fulfillment) {
+.controller('NeedsCtrl',function($scope, $state, Need, $ionicModal, Tag, Fulfillment, $filter) {
 
   $scope.callbackMethod = function (query) {
 
@@ -68,8 +68,7 @@ angular.module('starter.controllers')
   $scope.fulfillment = new Fulfillment();
   $scope.doFulfillment = function() {
     $scope.fulfillment.user = window.localStorage.user;
-    $scope.fulfillment.requestId = $scope.detailNeed.id;
-    $scope.fulfillment.until = $filter('date')($scope.fulfillment.untilDate, 'yyyy-MM-dd');
+    $scope.fulfillment.until = $filter('date')($scope.fulfillment.untilDate, 'dd.MM.yyyy');
     $scope.fulfillment = new Fulfillment();
     Fulfillment.save($scope.fulfillment, function() {
       $state.go('app.needs.todo');
