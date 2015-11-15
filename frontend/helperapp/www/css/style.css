@@ -121,3 +121,8 @@ label.item.valid-lr {
 .entryTitle {
 	font-weight: bold;
 }
+
+.detailTitle {
+	font-weight: bold;
+	font-size:1.8em;
+}

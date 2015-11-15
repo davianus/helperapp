@@ -6,13 +6,13 @@
     <h1 class="title">Need Detail</h1>
   </ion-header-bar>
   <ion-content>
-    <p class="tags">
-      <span ng-repeat="tag in detailNeed.tags">#{{tag}} </span>
+    <p class="tags detailTitle">
+      <span ng-repeat="tag in detailNeed.tags">{{tag}} </span>
     </p>
     <p class="date">{{detailNeed.startDate | date:'short'}} - {{detailNeed.endDate | date:'short'}}</p>
     <p class="description">{{detailNeed.description}}</p>
     <p class="amount">{{detailNeed.remaining}}</p>
-    <h2>Contact</h2>
+    <h3>Contact</h3>
     <p>{{detailNeed.user.name}}</p>
     <p>{{detailNeed.user.phone}}</p>
     <p>{{detailNeed.location}}</p>
