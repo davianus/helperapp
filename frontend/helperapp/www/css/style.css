@@ -130,3 +130,7 @@ label.item.valid-lr {
 .generalPadding {
 	  padding: 10px 0 2px 16px;
 }
+
+.done .item-content {
+  background-color: rgba(0,255,0,.8);
+}
