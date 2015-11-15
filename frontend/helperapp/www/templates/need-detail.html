@@ -16,6 +16,18 @@
     <p>{{detailNeed.user.name}}</p>
     <p>{{detailNeed.user.phone}}</p>
     <p>{{detailNeed.location}}</p>
-    <button class="button button-block button-positive">Fulfill</button>
+    <form class="fulfill-form" ng-submit="doFulfillment()">
+      <div class="list">
+        <label class="item item-input">
+          <span class="input-label">Until Date</span>
+          <input type="date" placeholder="dd.mm.yyyy" ng-model="fulfillment.untilDate">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Amount</span>
+          <input type="number" placeholder="Amount" ng-model="fulfillment.amount">
+        </label>
+      </div>
+      <button class="button button-block button-positive" type="submit">Fulfill</button>
+    </form>
   </ion-content>
 </ion-modal-view>
