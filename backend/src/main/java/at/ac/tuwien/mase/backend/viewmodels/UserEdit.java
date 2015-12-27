@@ -1,8 +1,5 @@
 package at.ac.tuwien.mase.backend.viewmodels;
 
-import at.ac.tuwien.mase.backend.models.User;
-import org.mindrot.jbcrypt.BCrypt;
-
 /**
  * Created by lobmaier on 14.11.2015.
  */

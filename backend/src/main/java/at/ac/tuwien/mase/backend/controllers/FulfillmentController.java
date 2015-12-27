@@ -10,6 +10,7 @@ import at.ac.tuwien.mase.backend.repositories.interfaces.IUserRepository;
 import at.ac.tuwien.mase.backend.viewmodels.FulfillmentEdit;
 import at.ac.tuwien.mase.backend.viewmodels.FulfillmentRead;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,18 +33,14 @@ public class FulfillmentController {
     private IRequestRepository requestRepository;
 
     @RequestMapping(method= RequestMethod.GET)
-    public List<FulfillmentRead> readAll(@PathVariable("username") String username) throws ControllerException {
-        User user = userRepository.findByUsername(username);
-        if (user == null ) throw new ControllerException("User not found.");
-        List<Fulfillment> fulfillments = fulfillmentRepository.findByUser(user)
+    public List<FulfillmentRead> readAll(@AuthenticationPrincipal User principal) throws ControllerException {
+        List<Fulfillment> fulfillments = fulfillmentRepository.findByUser(principal)
                 .stream().filter((Fulfillment f) -> !f.isDone()).collect(Collectors.toList());
         return fulfillments.stream().map(FulfillmentRead::new).collect(Collectors.toList());
     }
 
     @RequestMapping(method=RequestMethod.POST)
-    public FulfillmentRead create(@PathVariable("username") String username, @RequestBody FulfillmentEdit fulfillmentEdit) throws ControllerException {
-        User user = userRepository.findByUsername(username);
-        if (user == null ) throw new ControllerException("User not found.");
+    public FulfillmentRead create(@AuthenticationPrincipal User principal, @RequestBody FulfillmentEdit fulfillmentEdit) throws ControllerException {
         if (fulfillmentEdit.getAmount() == null ||
                 fulfillmentEdit.getRequestId() == null ||
                 fulfillmentEdit.getUntil() == null) {
@@ -54,27 +51,27 @@ public class FulfillmentController {
         Fulfillment fulfillment = new Fulfillment();
         fulfillment.setAmount(fulfillmentEdit.getAmount());
         fulfillment.setUntil(fulfillmentEdit.getUntil());
-        fulfillment.setUser(user);
+        fulfillment.setUser(principal);
         fulfillment.setRequest(request);
         fulfillmentRepository.save(fulfillment);
         return new FulfillmentRead(fulfillment);
     }
 
     @RequestMapping(value="/{id}", method=RequestMethod.GET)
-    public FulfillmentRead read(@PathVariable("username") String username, @PathVariable("id") long id) throws ControllerException {
-        User user = userRepository.findByUsername(username);
-        if (user == null ) throw new ControllerException("User not found.");
+    public FulfillmentRead read(@AuthenticationPrincipal User principal, @PathVariable("id") long id) throws ControllerException {
         Fulfillment fulfillment = fulfillmentRepository.findOne(id);
-        if (fulfillment == null ) throw new ControllerException("Fulfillment not found.");
+        if (fulfillment == null || (fulfillment.getUser().getId() != principal.getId() &&
+                fulfillment.getRequest().getUser().getId() != principal.getId()))
+            throw new ControllerException("Fulfillment not found.");
         return new FulfillmentRead(fulfillment);
     }
 
     @RequestMapping(value="/{id}", method=RequestMethod.POST)
-    public FulfillmentRead edit(@PathVariable("username") String username, @PathVariable("id") long id, @RequestBody FulfillmentEdit fulfillmentEdit) throws ControllerException {
-        User user = userRepository.findByUsername(username);
-        if (user == null ) throw new ControllerException("User not found.");
+    public FulfillmentRead edit(@AuthenticationPrincipal User principal, @PathVariable("id") long id, @RequestBody FulfillmentEdit fulfillmentEdit) throws ControllerException {
         Fulfillment fulfillment = fulfillmentRepository.findOne(id);
-        if (fulfillment == null) throw new ControllerException("Fulfillment not found.");
+        if (fulfillment == null || (fulfillment.getUser().getId() != principal.getId() &&
+                fulfillment.getRequest().getUser().getId() != principal.getId()))
+            throw new ControllerException("Fulfillment not found.");
         if (fulfillmentEdit.getAmount() != null) fulfillment.setAmount(fulfillmentEdit.getAmount());
         if (fulfillmentEdit.getUntil() != null) fulfillment.setUntil(fulfillmentEdit.getUntil());
         if (fulfillmentEdit.getDone() != null) fulfillment.setDone(fulfillmentEdit.getDone());
@@ -83,11 +80,9 @@ public class FulfillmentController {
     }
 
     @RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-    public void delete(@PathVariable("username") String username, @PathVariable("id") long id) throws ControllerException {
-        User user = userRepository.findByUsername(username);
-        if (user == null) throw new ControllerException("User not found.");
+    public void delete(@AuthenticationPrincipal User principal, @PathVariable("id") long id) throws ControllerException {
         Fulfillment fulfillment = fulfillmentRepository.findOne(id);
-        if (fulfillment != null && fulfillment.getUser().getId() == user.getId())
+        if (fulfillment != null && fulfillment.getUser().getId() == principal.getId())
             fulfillmentRepository.delete(id);
     }
 }

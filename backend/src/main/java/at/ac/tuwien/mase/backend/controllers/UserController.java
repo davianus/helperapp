@@ -5,8 +5,9 @@ import at.ac.tuwien.mase.backend.models.User;
 import at.ac.tuwien.mase.backend.repositories.interfaces.IUserRepository;
 import at.ac.tuwien.mase.backend.viewmodels.UserEdit;
 import at.ac.tuwien.mase.backend.viewmodels.UserRead;
-import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -20,21 +21,8 @@ public class UserController {
     private IUserRepository userRepository;
 
     @RequestMapping(value="/{username}", method=RequestMethod.GET)
-    public UserRead read(@PathVariable("username") String username) throws ControllerException {
-        User user = userRepository.findByUsername(username);
-        if (user == null ) {
-            throw new ControllerException("User not found.");
-        }
-        return new UserRead(user);
-    }
-
-    @RequestMapping(value="/token", method=RequestMethod.POST)
-    public String login(@RequestBody UserEdit user) throws ControllerException {
-        User u = userRepository.findByUsername(user.getUsername());
-        if (u == null || !BCrypt.checkpw(user.getPassword(), u.getPassword())) {
-            throw new ControllerException("User/Password incorrect.");
-        }
-        return u.getUsername();
+    public UserRead read(@AuthenticationPrincipal User principal) throws ControllerException {
+        return new UserRead(principal);
     }
 
     @RequestMapping(method=RequestMethod.POST)
@@ -48,16 +36,16 @@ public class UserController {
         User u = new User();
         u.setUsername(user.getUsername());
         u.setName(user.getName());
-        u.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+        u.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         u.setPhone(user.getPhone());
-        u.setLogo(user.getPhone());
+        u.setLogo(user.getLogo());
         userRepository.save(u);
         return new UserRead(userRepository.findByUsername(user.getUsername()));
     }
 
     @RequestMapping(value="/{username}", method=RequestMethod.POST)
-    public UserRead edit(@PathVariable("username") String username, @RequestBody UserEdit user) throws ControllerException {
-        User u = userRepository.findByUsername(username);
+    public UserRead edit(@AuthenticationPrincipal User principal, @RequestBody UserEdit user) throws ControllerException {
+        User u = userRepository.findByUsername(principal.getUsername());
         if (u == null) {
             throw new ControllerException("Username not found.");
         }
@@ -65,7 +53,7 @@ public class UserController {
             u.setName(user.getName());
         }
         if (user.getPassword() != null) {
-            u.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+            u.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         }
         if (user.getPhone() != null) {
             u.setPhone(user.getPhone());
