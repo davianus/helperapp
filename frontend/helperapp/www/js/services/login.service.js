@@ -8,6 +8,6 @@ angular.module('starter.controllers')
       'update': { method:'PUT' },
       'post': { method: 'POST',
         transformResponse: []},
-      'login': { method: 'POST'}
+      'login': { method: 'GET'}
     });
   });

@@ -1,6 +1,6 @@
 angular.module('starter.controllers')
 
-.controller('AppCtrl', function($scope, $state) {
+.controller('AppCtrl', function($scope, $state, $http) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -12,5 +12,9 @@ angular.module('starter.controllers')
   $scope.registrate = function() {
     $state.go('registration');
   };
+
+  $scope.logout = function() {
+    $http.defaults.headers.common.Authorization = 'Basic';
+  }
 
 });

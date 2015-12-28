@@ -7,7 +7,8 @@
   "dependencies": {
     "angular-resource": "~1.4.3",
     "ngCordova": "~0.1.23-alpha",
-    "ion-autocomplete": "~0.3.0"
+    "ion-autocomplete": "~0.3.0",
+    "angular-base64": "~2.0.5"
   },
   "resolutions": {
     "angular": "1.4.3"

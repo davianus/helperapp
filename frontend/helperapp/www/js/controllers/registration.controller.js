@@ -1,11 +1,12 @@
 angular.module('starter.controllers')
 
-.controller('RegistrationCtrl',function($scope, $ionicModal, $timeout, $state, $cordovaCamera, User, Login) {
+.controller('RegistrationCtrl',function($scope, $ionicModal, $timeout, $state, $cordovaCamera, User, Login, $base64, $http) {
 
   // Form data for the login modal
   $scope.loginData = {};
   $scope.loginForm = {loginData:{password:{}}};
   $scope.error = false;
+  $scope.errorMsg = "";
 
 
   // Create the login modal that we will use later
@@ -29,15 +30,26 @@ angular.module('starter.controllers')
   // Perform the login action when the user submits the login form
   $scope.doLogin = function(loginData) {
     //console.log('Doing login', $scope.loginData);
-      Login.post(loginData,function(resp) {
+    //set HTTP Basic Auth Header
+    $http.defaults.headers.common.Authorization = 'Basic ' +
+      $base64.encode(loginData.username + ':' + loginData.password);
+      User.login(loginData,function(resp) {
         //Success
-        window.localStorage['user'] = loginData.username;
+        var userData = {};
+        userData.user = loginData.username;
+        userData.pass = loginData.password;
+        window.localStorage['user'] = userData;
+
         $scope.closeLogin();
         $state.go('app.needs.all');
       }, function(resp) {
         //error
         $scope.error = true;
-        $scope.errorMessage = "Login failed";//resp.data.message;
+        if(resp.data != null) {
+          $scope.errorMessage = "Login failed: " + angular.fromJson(resp.data).message;
+        } else {
+          $scope.errorMessage = "Login failed: " + resp.data;
+        }
       });
 
 
@@ -50,9 +62,27 @@ angular.module('starter.controllers')
 
   $scope.user = {};
   $scope.doRegistration = function(user) {
-    // TODO: Check password if(user.password == user.confirmPw)
-    User.post(user);
-    window.localStorage['user'] = user.username;
-    $scope.login();
+    if(user.password != user.confirmPw)
+    {
+      $scope.error = true;
+      $scope.errorMsg = "Passwords do not match!"
+      return
+    }
+
+    User.post(user,
+      //success
+      function(resp) {
+        $scope.error = false;
+        $scope.errorMsg = "";
+        window.localStorage['user'] = user.username;
+        $scope.login();
+      },
+      //error
+      function (resp) {
+        console.log(resp);
+        $scope.error = true;
+        $scope.errorMsg = angular.fromJson(resp.data).message;
+      }
+    );
   };
 });

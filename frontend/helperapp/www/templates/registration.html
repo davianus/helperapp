@@ -21,9 +21,11 @@
         <label class="item item-input">
           <input type="password" placeholder="Confirm Password" ng-model="user.confirmPw">
         </label>
+        <span class="item item-assertive item-text-wrap" ng-show="error">Error: {{errorMsg}}</span>
         <button class="button button-block button-positive" type="submit">
           Submit
         </button>
+
       </div>
     </form>
   </ion-content>
