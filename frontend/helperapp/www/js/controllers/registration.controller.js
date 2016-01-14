@@ -34,7 +34,7 @@ angular.module('helperapp.controllers')
     $http.defaults.headers.common.Authorization = 'Basic ' +
       $base64.encode(loginData.username + ':' + loginData.password);
 
-      var loginUser = User.get({id: 'me'}).then(
+      User.get({id: 'me'}).$promise.then(
           function(resp) {
             window.localStorage['user'] = loginData.username;
             window.localStorage['password'] = loginData.password;
