@@ -10,6 +10,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -40,14 +41,12 @@ public class RequestController {
 
     @RequestMapping(method=RequestMethod.GET)
     public List<RequestRead> search(
+            @AuthenticationPrincipal User principal,
             @RequestParam(required=false) String filter,
-            @RequestParam(required=false) String user,
             @RequestParam(required=false) String tags,
             @RequestParam(value="start", required=false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date start,
             @RequestParam(value="end", required=false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date end) throws ControllerException {
-        User u = userRepository.findByUsername(user);
         if (filter == null) filter = "all";
-        if (u == null && !filter.equals("all")) throw new ControllerException("User must be given if filter is not all.");
         if (start == null) start = new Date();
         if (end == null) {
             Calendar c = new GregorianCalendar();
@@ -61,11 +60,11 @@ public class RequestController {
             if (rr.getFulfillments() != null && rr.getFulfillments().stream().allMatch((FulfillmentRead f) -> f.isDone())) continue;
             if (rr.getAmountDone() >= rr.getAmount() && !filter.equals("user")) continue;
             if (tags != null && tags != "" && !rr.getTags().containsAll(Arrays.asList(tags.split(",")))) continue;
-            if (filter.equals("user") && rr.getUser().getId() != u.getId()) continue;
-            if (filter.equals("subscriptions") && (!subscriptionRepository.findByUser(u)
+            if (filter.equals("user") && rr.getUser().getId() != principal.getId()) continue;
+            if (filter.equals("subscriptions") && (!subscriptionRepository.findByUser(principal)
                     .stream().anyMatch((Subscription s) -> rr.getTags().containsAll(
                             s.getTags().stream().map(Tag::getName).collect(Collectors.toList()))
-                    ) || rr.getUser().getId() == u.getId()))
+                    ) || rr.getUser().getId() == principal.getId()))
                 continue;
             rs.add(rr);
             if (rs.size() == 10) break;
@@ -74,17 +73,16 @@ public class RequestController {
     }
 
     @RequestMapping(method=RequestMethod.POST)
-    public RequestRead create(@RequestBody RequestEdit requestCreate) throws ControllerException {
+    public RequestRead create(@AuthenticationPrincipal User principal,
+                              @RequestBody RequestEdit requestCreate) throws ControllerException {
         if (requestCreate.getTags() == null || requestCreate.getTags().isEmpty() ||
                 requestCreate.getLocation() == null ||
                 requestCreate.getAmount() == null ||
                 requestCreate.getDescription() == null ||
                 requestCreate.getStartDate() == null ||
-                requestCreate.getEndDate() == null ||
-                requestCreate.getUser() == null) {
+                requestCreate.getEndDate() == null) {
             throw new ControllerException("Not all required attributes given.");
         }
-        User user = userRepository.findByUsername(requestCreate.getUser().getUsername());
         Request request = new Request();
         List<Tag> ts = new LinkedList<>();
         for (String tag :requestCreate.getTags()) {
@@ -114,7 +112,7 @@ public class RequestController {
         request.setDescription(requestCreate.getDescription());
         request.setStartDate(requestCreate.getStartDate());
         request.setEndDate(requestCreate.getEndDate());
-        request.setUser(user);
+        request.setUser(principal);
         requestRepository.save(request);
         return new RequestRead(request, true);
     }
