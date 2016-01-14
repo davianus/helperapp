@@ -34,17 +34,10 @@ angular.module('helperapp.controllers')
     $http.defaults.headers.common.Authorization = 'Basic ' +
       $base64.encode(loginData.username + ':' + loginData.password);
 
-      var loginUser = new User();
-      loginUser.username = loginData.username;
-      loginUser.password = loginData.password;
-
-      loginUser.$login().then(
+      var loginUser = User.get({id: 'me'}).then(
           function(resp) {
-            //Success
-            var userData = {};
-            userData.user = loginData.username;
-            userData.pass = loginData.password;
             window.localStorage['user'] = loginData.username;
+            window.localStorage['password'] = loginData.password;
 
             $scope.closeLogin();
             $state.go('app.needs.all');
