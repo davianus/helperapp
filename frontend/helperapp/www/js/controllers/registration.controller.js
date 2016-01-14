@@ -1,6 +1,6 @@
 angular.module('helperapp.controllers')
 
-.controller('RegistrationCtrl',function($scope, $ionicModal, $timeout, $state, $cordovaCamera, User, $base64, $http, Camera) {
+.controller('RegistrationCtrl',function($scope, $ionicModal, $timeout, $state, $cordovaCamera, User, $base64, $http) {
 
   // Form data for the login modal
   $scope.loginData = {};
