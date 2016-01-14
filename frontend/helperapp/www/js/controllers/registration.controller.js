@@ -80,6 +80,7 @@ angular.module('helperapp.controllers')
             $scope.errorMsg = "";
         //window.localStorage['username'] = user.username;
             $scope.login();
+            $scope.user = new User();
         }, function (resp) {
           $scope.error = true;
           $scope.errorMsg = angular.fromJson(resp.data).message;

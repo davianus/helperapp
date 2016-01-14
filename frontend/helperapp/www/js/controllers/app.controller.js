@@ -21,6 +21,8 @@ angular.module('helperapp.controllers')
 
   $scope.logout = function() {
     $http.defaults.headers.common.Authorization = 'Basic';
+    window.localStorage['username'] = undefined;
+    window.localStorage['password'] = undefined;
   }
 
 });
