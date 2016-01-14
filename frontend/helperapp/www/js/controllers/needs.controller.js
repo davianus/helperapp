@@ -44,13 +44,8 @@ angular.module('helperapp.controllers')
     $scope.canbeSaved = false;
     $scope.createModal.show();
   };
-  $scope.need = {};
-  // Perform the login action when the user submits the login form
+
   $scope.doCreate = function() {
-    //console.log('Doing login', $scope.loginData);
-
-    $scope.need.user = {username:window.localStorage['username']};
-
     $scope.need.$save().then(
         function() {
             $scope.closeCreate();
@@ -66,7 +61,7 @@ angular.module('helperapp.controllers')
   $scope.show = function(need) {
     Need.get({id:need.id},function(need){
       $scope.detailNeed = need;
-      $scope.notMyNeed = window.localStorage.user !== $scope.detailNeed.user.username;
+      $scope.notMyNeed = window.localStorage['username'] !== $scope.detailNeed.user.username;
       $scope.detailModal.show();
     });
 
@@ -74,7 +69,6 @@ angular.module('helperapp.controllers')
 
   $scope.fulfillment = new Fulfillment();
   $scope.doFulfillment = function() {
-    $scope.fulfillment.user = window.localStorage.user;
     $scope.fulfillment.requestId = $scope.detailNeed.id;
     $scope.fulfillment.until = $filter('date')($scope.fulfillment.untilDate, 'yyyy-MM-dd');
     Fulfillment.save($scope.fulfillment, function() {
@@ -93,7 +87,6 @@ angular.module('helperapp.controllers')
 
   $scope.deleteNeed = function(need) {
     var need = angular.copy(need);
-    //need.user = window.localStorage.user;
     Need.delete(need, function() {
       $scope.reload();
     });
@@ -101,11 +94,10 @@ angular.module('helperapp.controllers')
 
   $scope.doneFulfillment = function(fulfillment) {
     var tmp = {};
-    tmp.user = window.localStorage.user;
     tmp.id = fulfillment.id;
     tmp.done = true;
     Fulfillment.save(tmp, function() {
-      $scope.detailNeed = Need.get({id: $scope.detailNeed.id, user: window.localStorage.user});
+      $scope.detailNeed = Need.get({id: $scope.detailNeed.id});
     });
   };
 
@@ -144,7 +136,7 @@ angular.module('helperapp.controllers')
   }).controller('ByMeCtrl',function($scope,Need) {
     $scope.showCreate = true;
   $scope.reload = function() {
-    $scope.needs = Need.query({'filter': 'user', 'user': window.localStorage['username']});
+    $scope.needs = Need.query({'filter': 'user');
     $scope.fulfillment=[];
   }
     $scope.$on('$ionicView.beforeEnter', function() {
@@ -154,7 +146,7 @@ angular.module('helperapp.controllers')
   .controller('ForMeCtrl',function($scope,Need) {
     $scope.showCreate = false;
     $scope.reload = function() {
-      $scope.needs = Need.query({'filter': 'subscriptions', 'user': window.localStorage['username']});
+      $scope.needs = Need.query({'filter': 'subscriptions'});
       $scope.fulfillment=[];
     }
     $scope.$on('$ionicView.beforeEnter', function() {
@@ -164,7 +156,7 @@ angular.module('helperapp.controllers')
   .controller('ToDoCtrl',function($scope, Fulfillment) {
     $scope.showCreate = false;
     $scope.reload = function() {
-      Fulfillment.query({user: window.localStorage.user}, function(fulfillments) {
+      Fulfillment.query(function(fulfillments) {
         $scope.needs = [];
         $scope.fulfillments = fulfillments;
       });

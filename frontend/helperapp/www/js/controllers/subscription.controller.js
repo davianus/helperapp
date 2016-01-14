@@ -23,14 +23,11 @@ angular.module('helperapp.controllers')
   };
 
   $scope.doSubscribe = function() {
-    $scope.subscription.user = window.localStorage.user;
     $scope.subscription.start = $filter('date')($scope.subscription.startDate, 'yyyy-MM-dd');
     $scope.subscription.end = $filter('date')($scope.subscription.endDate, 'yyyy-MM-dd');
     Subscription.save($scope.subscription, function() {
       $scope.subscription = new Subscription();
-      $scope.subscriptions = Subscription.query({
-        user: window.localStorage.user
-      });
+      $scope.subscriptions = Subscription.query();
       $scope.closeSubscribe();
     });
   };
@@ -44,11 +41,8 @@ angular.module('helperapp.controllers')
 
   $scope.deleteSubscription = function(subscription) {
     var subscription = angular.copy(subscription);
-    subscription.user = window.localStorage.user;
     Subscription.delete(subscription, function() {
-      $scope.subscriptions = Subscription.query({
-        user: window.localStorage.user
-      });
+      $scope.subscriptions = Subscription.query();
     });
   }
 
