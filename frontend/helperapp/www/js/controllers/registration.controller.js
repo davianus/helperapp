@@ -73,6 +73,7 @@ angular.module('helperapp.controllers')
             $scope.error = false;
             $scope.errorMsg = "";
             $scope.login();
+            $scope.user = new User();
         }, function (resp) {
           $scope.error = true;
           $scope.errorMsg = angular.fromJson(resp.data).message;
