@@ -3,7 +3,7 @@
  */
 'use strict';
 angular.module('helperapp.services')
-  .factory('authInterceptor', ['$q','$location','$base64', function ($q,$location,$base64) {
+  .factory('authInterceptor', ['$q','$injector','$base64', function ($q,$injector,$base64) {
 
     var authInterceptorServiceFactory = {};
 
@@ -14,8 +14,8 @@ angular.module('helperapp.services')
       var loginData = {};
       loginData.username = window.localStorage['username'];
       loginData.password = window.localStorage['password'];
-      // TODO Fix check for undefined
-      if (loginData.username != 'undefined' && loginData.password != 'undefined') {
+      
+      if (loginData.username && loginData.password) {
         config.headers.Authorization = 'Basic ' + $base64.encode(loginData.username + ':' + loginData.password);
       } else {
         config.headers.Authorization = undefined;
@@ -27,7 +27,8 @@ angular.module('helperapp.services')
     authInterceptorServiceFactory.responseError = function (rejection) {
       if (rejection.status === 401) {
 
-          $location.path('#/registration');
+          var $state = $injector.get('$state');
+          $state.go('registration', {}, {reload: true});
 
       }
       return $q.reject(rejection);

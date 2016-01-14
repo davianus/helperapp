@@ -2,7 +2,7 @@
  * Created by MiiKE on 14.11.2015.
  */
 angular.module('helperapp.controllers')
-.controller('NeedsCtrl',function($scope, $state, Need, $ionicModal, Tag, Fulfillment, $filter) {
+.controller('NeedsCtrl',function($scope, $state, $http, Need, $ionicModal, Tag, Fulfillment, $filter) {
 
 
 
@@ -39,24 +39,24 @@ angular.module('helperapp.controllers')
     $scope.createModal.hide();
   };
 
-  // Open the login modal
-  $scope.create = function() {
+  $scope.create = function(need) {
+    $scope.need = need || new Need();
+    $scope.canbeSaved = false;
     $scope.createModal.show();
   };
   $scope.need = {};
   // Perform the login action when the user submits the login form
-  $scope.doCreate = function(need) {
+  $scope.doCreate = function() {
     //console.log('Doing login', $scope.loginData);
 
-    need.user = {username:window.localStorage['user']};
-    need.location = {name:'Wien',location:[0,0]};
-    Need.post(need, function() {
-      $scope.closeCreate();
-      $state.go('app.needs.byme',{},{reload:true});
-    });
-    // Simulate a login delay. Remove this and replace with your login
-    // code if using a login system
+    $scope.need.user = {username:window.localStorage['username']};
 
+    $scope.need.$save().then(
+        function() {
+            $scope.closeCreate();
+            $state.go('app.needs.byme',{},{reload:true});
+        }
+    );
   };
 
   $scope.closeDetail = function() {
@@ -68,7 +68,7 @@ angular.module('helperapp.controllers')
       $scope.detailNeed = need;
       $scope.notMyNeed = window.localStorage.user !== $scope.detailNeed.user.username;
       $scope.detailModal.show();
-    });//angular.copy(need);
+    });
 
   };
 
@@ -88,7 +88,7 @@ angular.module('helperapp.controllers')
     $scope.need = angular.copy(need);
     $scope.need.startDate = new Date(Date.parse($scope.need.startDate));
     $scope.need.endDate = new Date(Date.parse($scope.need.endDate));
-    $scope.newNeed(need);
+    $scope.create(need);
   };
 
   $scope.deleteNeed = function(need) {
@@ -109,6 +109,28 @@ angular.module('helperapp.controllers')
     });
   };
 
+  $scope.getLatLng = function() {
+
+      var username = window.localStorage['username'];
+      var password = window.localStorage['password'];
+      window.localStorage.removeItem('username');
+      window.localStorage.removeItem('password');
+
+    $http.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + encodeURIComponent($scope.need.location.name)).then(
+        function(response) {
+            window.localStorage['username'] = username;
+            window.localStorage['password'] = password;
+
+            $scope.need.location.location = [
+                response.data.results[0].geometry.location.lat,
+                response.data.results[0].geometry.location.lng
+            ];
+
+            $scope.canBeSaved = true;
+        }
+    );
+  };
+
 })
   .controller('AllCtrl',function($scope,Need) {
     $scope.showCreate = false;
@@ -122,7 +144,7 @@ angular.module('helperapp.controllers')
   }).controller('ByMeCtrl',function($scope,Need) {
     $scope.showCreate = true;
   $scope.reload = function() {
-    $scope.needs = Need.query({'filter': 'user', 'user': window.localStorage['user']});
+    $scope.needs = Need.query({'filter': 'user', 'user': window.localStorage['username']});
     $scope.fulfillment=[];
   }
     $scope.$on('$ionicView.beforeEnter', function() {
@@ -132,7 +154,7 @@ angular.module('helperapp.controllers')
   .controller('ForMeCtrl',function($scope,Need) {
     $scope.showCreate = false;
     $scope.reload = function() {
-      $scope.needs = Need.query({'filter': 'subscriptions', 'user': window.localStorage['user']});
+      $scope.needs = Need.query({'filter': 'subscriptions', 'user': window.localStorage['username']});
       $scope.fulfillment=[];
     }
     $scope.$on('$ionicView.beforeEnter', function() {
