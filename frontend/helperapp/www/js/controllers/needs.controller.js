@@ -61,13 +61,13 @@ angular.module('helperapp.controllers')
   $scope.show = function(need) {
     Need.get({id:need.id},function(need){
       $scope.detailNeed = need;
+      $scope.fulfillment = new Fulfillment();
       $scope.notMyNeed = window.localStorage['username'] !== $scope.detailNeed.user.username;
       $scope.detailModal.show();
     });
 
   };
 
-  $scope.fulfillment = new Fulfillment();
   $scope.doFulfillment = function() {
     $scope.fulfillment.requestId = $scope.detailNeed.id;
     $scope.fulfillment.until = $filter('date')($scope.fulfillment.untilDate, 'yyyy-MM-dd');
@@ -136,7 +136,7 @@ angular.module('helperapp.controllers')
   }).controller('ByMeCtrl',function($scope,Need) {
     $scope.showCreate = true;
   $scope.reload = function() {
-    $scope.needs = Need.query({'filter': 'user');
+    $scope.needs = Need.query({'filter': 'user'});
     $scope.fulfillment=[];
   }
     $scope.$on('$ionicView.beforeEnter', function() {
