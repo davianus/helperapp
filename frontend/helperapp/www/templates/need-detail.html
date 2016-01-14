@@ -31,7 +31,7 @@
       <button class="button button-block button-positive" type="submit">Fulfill</button>
     </form>
     <div ng-hide="notMyNeed">
-      <h2>Fulfillments</h2>
+      <h3 class="generalPadding">Fulfillments</h3>
       <ion-list>
         <ion-item ng-repeat="fulfillment in detailNeed.fulfillments" ng-class="{done: fulfillment.done}">
           <p>{{fulfillment.until | date:'short'}}</p>

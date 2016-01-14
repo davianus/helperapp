@@ -10,7 +10,6 @@ angular.module('helperapp.controllers')
 
   $scope.user = new User();
 
-
   // Create the login modal that we will use later
   $ionicModal.fromTemplateUrl('templates/login.html', {
     scope: $scope
@@ -25,6 +24,7 @@ angular.module('helperapp.controllers')
 
   // Open the login modal
   $scope.login = function() {
+     $scope.loginData = {};
     $scope.loginModal.show();
   };
 
@@ -79,4 +79,3 @@ angular.module('helperapp.controllers')
 
 
 });
-

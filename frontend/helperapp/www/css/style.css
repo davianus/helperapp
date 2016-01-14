@@ -132,5 +132,5 @@ label.item.valid-lr {
 }
 
 .done .item-content {
-  background-color: rgba(0,255,0,.8);
+  border-left: 10px solid rgba(13, 148, 13, 0.8);;
 }

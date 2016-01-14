@@ -41,11 +41,15 @@ angular.module('helperapp.controllers')
 
   $scope.create = function(need) {
     $scope.need = need || new Need();
+    $scope.need.startDate = $scope.need.startDate || new Date();
+    $scope.need.endDate = $scope.need.endDate || new Date();
     $scope.canbeSaved = false;
     $scope.createModal.show();
   };
 
   $scope.doCreate = function() {
+    $scope.need.startDate = $filter('date')($scope.need.startDate, 'yyyy-MM-dd');
+    $scope.need.endDate = $filter('date')($scope.need.endDate, 'yyyy-MM-dd');
     $scope.need.$save().then(
         function() {
             $scope.closeCreate();
@@ -62,34 +66,30 @@ angular.module('helperapp.controllers')
     Need.get({id:need.id},function(need){
       $scope.detailNeed = need;
       $scope.fulfillment = new Fulfillment();
+      $scope.fulfillment.untilDate = new Date();
       $scope.notMyNeed = window.localStorage['username'] !== $scope.detailNeed.user.username;
       $scope.detailModal.show();
     });
-
   };
 
   $scope.doFulfillment = function() {
     $scope.fulfillment.requestId = $scope.detailNeed.id;
     $scope.fulfillment.until = $filter('date')($scope.fulfillment.untilDate, 'yyyy-MM-dd');
-    Fulfillment.save($scope.fulfillment, function() {
-      $state.go('app.needs.todo');
-      $scope.closeDetail();
-      $scope.fulfillment = new Fulfillment();
-    });
+    $scope.fulfillment.$save().then(
+        function() {
+          $state.go('app.needs.todo');
+          $scope.closeDetail();
+        }
+    )
   };
 
   $scope.editNeed = function(need) {
-    $scope.need = angular.copy(need);
-    $scope.need.startDate = new Date(Date.parse($scope.need.startDate));
-    $scope.need.endDate = new Date(Date.parse($scope.need.endDate));
-    $scope.create(need);
-  };
-
-  $scope.deleteNeed = function(need) {
-    var need = angular.copy(need);
-    Need.delete(need, function() {
-      $scope.reload();
-    });
+    Need.get({id:need.id}, function(need) {
+        $scope.need = need;
+        $scope.need.startDate = new Date(Date.parse(need.startDate));
+        $scope.need.endDate = new Date(Date.parse(need.endDate));
+        $scope.create(need);
+    })
   };
 
   $scope.doneFulfillment = function(fulfillment) {
@@ -130,6 +130,12 @@ angular.module('helperapp.controllers')
       $scope.needs = Need.query({'filter': 'all'});
       $scope.fulfillment=[];
     }
+    $scope.deleteNeed = function(need) {
+      var need = angular.copy(need);
+      Need.delete(need, function() {
+        $scope.reload();
+      });
+    };
     $scope.$on('$ionicView.beforeEnter', function() {
       $scope.reload();
     });
@@ -139,6 +145,12 @@ angular.module('helperapp.controllers')
     $scope.needs = Need.query({'filter': 'user'});
     $scope.fulfillment=[];
   }
+  $scope.deleteNeed = function(need) {
+    var need = angular.copy(need);
+    Need.delete(need, function() {
+      $scope.reload();
+    });
+  };
     $scope.$on('$ionicView.beforeEnter', function() {
       $scope.reload();
     });
@@ -149,6 +161,12 @@ angular.module('helperapp.controllers')
       $scope.needs = Need.query({'filter': 'subscriptions'});
       $scope.fulfillment=[];
     }
+    $scope.deleteNeed = function(need) {
+      var need = angular.copy(need);
+      Need.delete(need, function() {
+        $scope.reload();
+      });
+    };
     $scope.$on('$ionicView.beforeEnter', function() {
       $scope.reload();
     });
@@ -160,7 +178,13 @@ angular.module('helperapp.controllers')
         $scope.needs = [];
         $scope.fulfillments = fulfillments;
       });
-    }
+  } ;
+  $scope.deleteNeed = function(need) {
+    var need = angular.copy(need);
+    Need.delete(need, function() {
+      $scope.reload();
+    });
+  };
     $scope.$on('$ionicView.beforeEnter', function() {
       $scope.reload();
     });

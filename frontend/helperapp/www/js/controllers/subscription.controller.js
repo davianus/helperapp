@@ -19,6 +19,8 @@ angular.module('helperapp.controllers')
 
   $scope.subscribe = function() {
     $scope.subscription = new Subscription();
+    $scope.subscription.startDate = new Date();
+    $scope.subscription.endDate = new Date();
     $scope.subscriptionModal.show();
   };
 
@@ -26,7 +28,6 @@ angular.module('helperapp.controllers')
     $scope.subscription.start = $filter('date')($scope.subscription.startDate, 'yyyy-MM-dd');
     $scope.subscription.end = $filter('date')($scope.subscription.endDate, 'yyyy-MM-dd');
     Subscription.save($scope.subscription, function() {
-      $scope.subscription = new Subscription();
       $scope.subscriptions = Subscription.query();
       $scope.closeSubscribe();
     });
