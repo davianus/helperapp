@@ -2,8 +2,6 @@ angular.module('helperapp.controllers')
 
 .controller('SubscriptionCtrl', function($scope, $ionicModal, $filter, Subscription, Tag) {
 
-  $scope.subscription = new Subscription();
-
   $scope.subscriptions = Subscription.query({
     user: window.localStorage.user
   });
@@ -19,12 +17,11 @@ angular.module('helperapp.controllers')
     $scope.subscriptionModal.hide();
   };
 
-  // Open the login modal
   $scope.subscribe = function() {
+    $scope.subscription = new Subscription();
     $scope.subscriptionModal.show();
   };
 
-  // Perform the login action when the user submits the login form
   $scope.doSubscribe = function() {
     $scope.subscription.user = window.localStorage.user;
     $scope.subscription.start = $filter('date')($scope.subscription.startDate, 'yyyy-MM-dd');
