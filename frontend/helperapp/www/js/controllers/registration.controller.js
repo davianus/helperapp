@@ -1,6 +1,6 @@
 angular.module('helperapp.controllers')
 
-.controller('RegistrationCtrl',function($scope, $ionicModal, $timeout, $state, $cordovaCamera, User, Login, $base64, $http) {
+.controller('RegistrationCtrl',function($scope, $ionicModal, $timeout, $state, $cordovaCamera, User, $base64, $http) {
 
   // Form data for the login modal
   $scope.loginData = {};
@@ -33,25 +33,31 @@ angular.module('helperapp.controllers')
     //set HTTP Basic Auth Header
     $http.defaults.headers.common.Authorization = 'Basic ' +
       $base64.encode(loginData.username + ':' + loginData.password);
-      User.login(loginData,function(resp) {
-        //Success
-        var userData = {};
-        userData.user = loginData.username;
-        userData.pass = loginData.password;
-        window.localStorage['user'] = userData;
 
-        $scope.closeLogin();
-        $state.go('app.needs.all');
-      }, function(resp) {
-        //error
-        $scope.error = true;
-        if(resp.data != null) {
-          $scope.errorMessage = "Login failed: " + angular.fromJson(resp.data).message;
-        } else {
-          $scope.errorMessage = "Login failed: " + resp.data;
-        }
-      });
+      var loginUser = new User();
+      loginUser.username = loginData.username;
+      loginUser.password = loginData.password;
 
+      loginUser.$login().then(
+          function(resp) {
+            //Success
+            var userData = {};
+            userData.user = loginData.username;
+            userData.pass = loginData.password;
+            window.localStorage['user'] = loginData.username;
+
+            $scope.closeLogin();
+            $state.go('app.needs.all');
+          }, function(resp) {
+            //error
+            $scope.error = true;
+            if(resp.data != null) {
+              $scope.errorMessage = "Login failed: " + angular.fromJson(resp.data).message;
+            } else {
+              $scope.errorMessage = "Login failed: " + resp.data;
+            }
+          }
+      );
 
     // Simulate a login delay. Remove this and replace with your login
     // code if using a login system
@@ -60,29 +66,24 @@ angular.module('helperapp.controllers')
     }, 1000);
   };
 
-  $scope.user = {};
+  $scope.user = new User();
   $scope.doRegistration = function(user) {
     if(user.password != user.confirmPw)
     {
       $scope.error = true;
-      $scope.errorMsg = "Passwords do not match!"
-      return
+      $scope.errorMsg = "Passwords do not match!";
+      return;
     }
 
-    User.post(user,
-      //success
-      function(resp) {
-        $scope.error = false;
-        $scope.errorMsg = "";
-        window.localStorage['user'] = user.username;
-        $scope.login();
-      },
-      //error
-      function (resp) {
-        console.log(resp);
-        $scope.error = true;
-        $scope.errorMsg = angular.fromJson(resp.data).message;
-      }
+    user.$save().then(
+        function(response) {
+            $scope.error = false;
+            $scope.errorMsg = "";
+            $scope.login();
+        }, function (resp) {
+          $scope.error = true;
+          $scope.errorMsg = angular.fromJson(resp.data).message;
+        }
     );
   };
 });
