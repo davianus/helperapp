@@ -34,13 +34,18 @@ angular.module('helperapp.controllers')
     //set HTTP Basic Auth Header
     $http.defaults.headers.common.Authorization = 'Basic ' +
       $base64.encode(loginData.username + ':' + loginData.password);
+<<<<<<< Updated upstream
+=======
+      User.login(loginData,function(resp) {
+        //Success
+        window.localStorage['username'] = loginData.username;
+        window.localStorage['password'] = loginData.password;
+>>>>>>> Stashed changes
 
       var loginUser = User.get({id: 'me'}).then(
           function(resp) {
-            //window.localStorage['user'] = loginData.username;
-            //window.localStorage['password'] = loginData.password;
-        window.localStorage['username'] = loginData.username;
-        window.localStorage['password'] = loginData.password;
+            window.localStorage['user'] = loginData.username;
+            window.localStorage['password'] = loginData.password;
 
             $scope.closeLogin();
             $state.go('app.needs.all');
@@ -71,16 +76,32 @@ angular.module('helperapp.controllers')
       return;
     }
 
+<<<<<<< Updated upstream
     user.$save().then(
         function(response) {
             $scope.error = false;
             $scope.errorMsg = "";
-        window.localStorage['username'] = user.username;
             $scope.login();
         }, function (resp) {
           $scope.error = true;
           $scope.errorMsg = angular.fromJson(resp.data).message;
         }
+=======
+    User.post(user,
+      //success
+      function(resp) {
+        $scope.error = false;
+        $scope.errorMsg = "";
+        window.localStorage['username'] = user.username;
+        $scope.login();
+      },
+      //error
+      function (resp) {
+        console.log(resp);
+        $scope.error = true;
+        $scope.errorMsg = angular.fromJson(resp.data).message;
+      }
+>>>>>>> Stashed changes
     );
   };
 });

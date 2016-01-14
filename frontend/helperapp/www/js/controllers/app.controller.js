@@ -10,6 +10,11 @@ angular.module('helperapp.controllers')
   //});
 
   $scope.registrate = function() {
+    $scope.userData = window.localStorage['user'];
+    if($scope.userData!==null && $scope.userData.username!==null && $scope.userData.username!='') {
+      $state.go('app.needs.all')
+    }
+
     $state.go('registration');
   };
 

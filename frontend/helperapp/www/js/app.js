@@ -25,6 +25,8 @@ angular.module('helperapp', ['ionic', 'helperapp.controllers', 'helperapp.servic
 .config(function($stateProvider, $urlRouterProvider,$httpProvider) {
   //Enable Cross Domain Calls
   $httpProvider.defaults.useXDomain = true;
+  $httpProvider.interceptors.push('authInterceptor');
+
   $stateProvider
   .state('welcome', {
     url: '/welcome',
