@@ -5,7 +5,7 @@ angular.module('helperapp.controllers')
   $scope.subscription = new Subscription();
 
   $scope.subscriptions = Subscription.query({
-    user: window.localStorage.user
+    user: window.localStorage.username
   });
 
   $ionicModal.fromTemplateUrl('templates/new-subscription.html', {
@@ -26,13 +26,13 @@ angular.module('helperapp.controllers')
 
   // Perform the login action when the user submits the login form
   $scope.doSubscribe = function() {
-    $scope.subscription.user = window.localStorage.user;
+    $scope.subscription.user = window.localStorage.username;
     $scope.subscription.start = $filter('date')($scope.subscription.startDate, 'yyyy-MM-dd');
     $scope.subscription.end = $filter('date')($scope.subscription.endDate, 'yyyy-MM-dd');
     Subscription.save($scope.subscription, function() {
       $scope.subscription = new Subscription();
       $scope.subscriptions = Subscription.query({
-        user: window.localStorage.user
+        user: window.localStorage.username
       });
       $scope.closeSubscribe();
     });
@@ -47,10 +47,10 @@ angular.module('helperapp.controllers')
 
   $scope.deleteSubscription = function(subscription) {
     var subscription = angular.copy(subscription);
-    subscription.user = window.localStorage.user;
+    subscription.user = window.localStorage.username;
     Subscription.delete(subscription, function() {
       $scope.subscriptions = Subscription.query({
-        user: window.localStorage.user
+        user: window.localStorage.username
       });
     });
   }

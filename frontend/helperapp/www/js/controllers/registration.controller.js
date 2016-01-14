@@ -1,6 +1,6 @@
 angular.module('helperapp.controllers')
 
-.controller('RegistrationCtrl',function($scope, $ionicModal, $timeout, $state, $cordovaCamera, User, $base64, $http) {
+.controller('RegistrationCtrl',function($scope, $ionicModal, $timeout, $state, $cordovaCamera, User, $base64, $http, Camera) {
 
   // Form data for the login modal
   $scope.loginData = {};
@@ -87,4 +87,7 @@ angular.module('helperapp.controllers')
         }
     );
   };
+
+
 });
+

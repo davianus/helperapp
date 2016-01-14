@@ -12,8 +12,8 @@ angular.module('helperapp.controllers')
   $scope.registrate = function() {
     $scope.username = window.localStorage['username'];
     $scope.password = window.localStorage['password'];
-    // TODO Fix check for undefined
-    if( $scope.username != 'undefined' && $scope.password != 'undefined') {
+
+    if( $scope.username  && $scope.password ) {
       $state.go('app.needs.all')
     } else {
       $state.go('registration');
@@ -22,8 +22,8 @@ angular.module('helperapp.controllers')
 
   $scope.logout = function() {
     $http.defaults.headers.common.Authorization = 'Basic';
-    window.localStorage['username'] = undefined;
-    window.localStorage['password'] = undefined;
+    window.localStorage.removeItem('username');
+    window.localStorage.removeItem('password');
   }
 
 });
