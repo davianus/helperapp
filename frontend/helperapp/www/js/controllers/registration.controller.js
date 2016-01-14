@@ -34,13 +34,13 @@ angular.module('helperapp.controllers')
     //set HTTP Basic Auth Header
     $http.defaults.headers.common.Authorization = 'Basic ' +
       $base64.encode(loginData.username + ':' + loginData.password);
-
-      User.get({id: 'me'}).$promise.then(
-          function(resp) {
+    window.localStorage['username'] = loginData.username;
+    window.localStorage['password'] = loginData.password;
+    User.get({id: 'me'}).$promise.then(
+        function(resp) {
             //window.localStorage['user'] = loginData.username;
             //window.localStorage['password'] = loginData.password;
-        window.localStorage['username'] = loginData.username;
-        window.localStorage['password'] = loginData.password;
+
 
             $scope.closeLogin();
             $state.go('app.needs.all');
@@ -71,11 +71,14 @@ angular.module('helperapp.controllers')
       return;
     }
 
+    window.localStorage['username'] = undefined;
+    window.localStorage['password'] = undefined;
+
     user.$save().then(
         function(response) {
             $scope.error = false;
             $scope.errorMsg = "";
-        window.localStorage['username'] = user.username;
+        //window.localStorage['username'] = user.username;
             $scope.login();
         }, function (resp) {
           $scope.error = true;

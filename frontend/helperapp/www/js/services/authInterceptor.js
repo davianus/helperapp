@@ -14,8 +14,10 @@ angular.module('helperapp.services')
       var loginData = {};
       loginData.username = window.localStorage['username'];
       loginData.password = window.localStorage['password'];
-      if (loginData.username) {
+      if (loginData.username != 'undefined' && loginData.password != 'undefined') {
         config.headers.Authorization = 'Basic ' + $base64.encode(loginData.username + ':' + loginData.password);
+      } else {
+        config.headers.Authorization = undefined;
       }
 
       return config;
@@ -24,7 +26,7 @@ angular.module('helperapp.services')
     authInterceptorServiceFactory.responseError = function (rejection) {
       if (rejection.status === 401) {
 
-          $location.path('./registration');
+          $location.path('#/registration');
 
       }
       return $q.reject(rejection);

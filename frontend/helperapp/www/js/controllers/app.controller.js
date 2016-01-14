@@ -10,12 +10,13 @@ angular.module('helperapp.controllers')
   //});
 
   $scope.registrate = function() {
-    $scope.userData = window.localStorage['user'];
-    if($scope.userData!==null && $scope.userData.username!==null && $scope.userData.username!='') {
+    $scope.username = window.localStorage['username'];
+    $scope.password = window.localStorage['password'];
+    if( $scope.username && $scope.password) {
       $state.go('app.needs.all')
+    } else {
+      $state.go('registration');
     }
-
-    $state.go('registration');
   };
 
   $scope.logout = function() {
