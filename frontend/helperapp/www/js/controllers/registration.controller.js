@@ -8,6 +8,8 @@ angular.module('helperapp.controllers')
   $scope.error = false;
   $scope.errorMsg = "";
 
+  $scope.user = new User();
+
 
   // Create the login modal that we will use later
   $ionicModal.fromTemplateUrl('templates/login.html', {
@@ -23,29 +25,25 @@ angular.module('helperapp.controllers')
 
   // Open the login modal
   $scope.login = function() {
-    $scope.username = window.localStorage['username'];
     $scope.loginModal.show();
   };
 
 
   // Perform the login action when the user submits the login form
   $scope.doLogin = function(loginData) {
-    //console.log('Doing login', $scope.loginData);
-    //set HTTP Basic Auth Header
-    $http.defaults.headers.common.Authorization = 'Basic ' +
-      $base64.encode(loginData.username + ':' + loginData.password);
     window.localStorage['username'] = loginData.username;
     window.localStorage['password'] = loginData.password;
+
     User.get({id: 'me'}).$promise.then(
         function(resp) {
-            //window.localStorage['user'] = loginData.username;
-            //window.localStorage['password'] = loginData.password;
-
-
             $scope.closeLogin();
             $state.go('app.needs.all');
           }, function(resp) {
             //error
+
+            window.localStorage.removeItem('username');
+            window.localStorage.removeItem('password');
+
             $scope.error = true;
             if(resp.data != null) {
               $scope.errorMessage = "Login failed: " + angular.fromJson(resp.data).message;
@@ -54,15 +52,8 @@ angular.module('helperapp.controllers')
             }
           }
       );
-
-    // Simulate a login delay. Remove this and replace with your login
-    // code if using a login system
-    $timeout(function() {
-
-    }, 1000);
   };
 
-  $scope.user = new User();
   $scope.doRegistration = function(user) {
     if(user.password != user.confirmPw)
     {
@@ -71,16 +62,14 @@ angular.module('helperapp.controllers')
       return;
     }
 
-    window.localStorage['username'] = undefined;
-    window.localStorage['password'] = undefined;
+    window.localStorage.removeItem('username');
+    window.localStorage.removeItem('password');
 
     user.$save().then(
         function(response) {
             $scope.error = false;
             $scope.errorMsg = "";
-        //window.localStorage['username'] = user.username;
             $scope.login();
-            $scope.user = new User();
         }, function (resp) {
           $scope.error = true;
           $scope.errorMsg = angular.fromJson(resp.data).message;
