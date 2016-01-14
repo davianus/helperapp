@@ -14,6 +14,7 @@ angular.module('helperapp.services')
       var loginData = {};
       loginData.username = window.localStorage['username'];
       loginData.password = window.localStorage['password'];
+      // TODO Fix check for undefined
       if (loginData.username != 'undefined' && loginData.password != 'undefined') {
         config.headers.Authorization = 'Basic ' + $base64.encode(loginData.username + ':' + loginData.password);
       } else {

@@ -12,7 +12,8 @@ angular.module('helperapp.controllers')
   $scope.registrate = function() {
     $scope.username = window.localStorage['username'];
     $scope.password = window.localStorage['password'];
-    if( $scope.username && $scope.password) {
+    // TODO Fix check for undefined
+    if( $scope.username != 'undefined' && $scope.password != 'undefined') {
       $state.go('app.needs.all')
     } else {
       $state.go('registration');
