@@ -1,4 +1,4 @@
-angular.module('starter.controllers')
+angular.module('helperapp.controllers')
 
 .controller('AppCtrl', function($scope, $state, $http) {
 

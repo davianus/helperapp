@@ -1,7 +1,7 @@
 /**
  * Created by MiiKE on 14.11.2015.
  */
-angular.module('starter.controllers')
+angular.module('helperapp.controllers')
 .controller('NeedsCtrl',function($scope, $state, Need, $ionicModal, Tag, Fulfillment, $filter) {
 
 

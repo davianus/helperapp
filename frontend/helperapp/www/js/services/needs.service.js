@@ -1,4 +1,4 @@
-angular.module('starter.controllers')
+angular.module('helperapp.services')
 .factory('Need', function ($resource, baseurl) {
   return $resource(baseurl + 'requests/:id', {}, {
     'query': { method: 'GET', isArray: true},

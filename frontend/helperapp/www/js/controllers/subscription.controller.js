@@ -1,4 +1,4 @@
-angular.module('starter.controllers')
+angular.module('helperapp.controllers')
 
 .controller('SubscriptionCtrl', function($scope, $ionicModal, $filter, Subscription, Tag) {
 

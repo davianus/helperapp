@@ -1,4 +1,4 @@
-angular.module('starter.controllers')
+angular.module('helperapp.services')
 .factory('User', function ($resource, baseurl) {
   return $resource(baseurl + 'user/:username', {username:'@username'}, {
     'query': { method: 'GET', isArray: true},

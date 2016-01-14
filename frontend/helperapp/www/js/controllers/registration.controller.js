@@ -1,4 +1,4 @@
-angular.module('starter.controllers')
+angular.module('helperapp.controllers')
 
 .controller('RegistrationCtrl',function($scope, $ionicModal, $timeout, $state, $cordovaCamera, User, Login, $base64, $http) {
 

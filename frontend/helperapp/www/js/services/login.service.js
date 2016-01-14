@@ -1,4 +1,4 @@
-angular.module('starter.controllers')
+angular.module('helperapp.services')
   .factory('Login', function ($resource, baseurl) {
     return $resource(baseurl + 'user/token/', {}, {
       'query': { method: 'GET', isArray: true},
